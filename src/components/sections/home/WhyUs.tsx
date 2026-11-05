@@ -23,7 +23,7 @@ export function WhyUs() {
               </p>
             </div>
             <ImageReveal className="hidden lg:block">
-              <Photo k="drumsStacked" ratio={4 / 3} sizes="30vw" className="aspect-[4/3] w-full max-w-[360px] rounded-[3px]" />
+              <Photo k="gears" ratio={4 / 3} sizes="30vw" className="aspect-[4/3] w-full max-w-[360px] rounded-[3px]" />
             </ImageReveal>
           </div>
 

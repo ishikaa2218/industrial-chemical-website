@@ -212,7 +212,7 @@ export default function About() {
             </ul>
           </div>
           <div className="relative min-h-[320px] lg:col-span-6">
-            <Photo k="drumsStacked" sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full" />
+            <Photo k="pipes" sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full" />
           </div>
         </div>
       </section>
@@ -308,7 +308,7 @@ export default function About() {
         </div>
       </section>
 
-      <CtaBand photo="gears" />
+      <CtaBand photo="grinding" />
     </>
   )
 }

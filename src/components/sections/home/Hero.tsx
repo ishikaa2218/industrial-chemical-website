@@ -34,9 +34,9 @@ export function Hero() {
           <motion.p
             aria-hidden
             {...rise(0.1)}
-            className="display col-span-12 text-[clamp(44px,8.4vw,132px)] font-medium text-ink lg:col-span-9"
+            className="display col-span-12 text-[clamp(40px,11vw,72px)] lg:text-[min(6.4vw,12.5svh)] font-medium text-ink lg:col-span-9"
           >
-            Advanced chemical
+            <span className="lg:whitespace-nowrap">Advanced chemical</span>
             <br />
             solutions
           </motion.p>
@@ -54,7 +54,8 @@ export function Hero() {
           </motion.ul>
 
           {/* Central image — takes the place of the reference's centrepiece */}
-          <div className="col-span-12 my-7 lg:col-span-6 lg:col-start-4 lg:row-start-2 lg:my-6 lg:self-center">
+          <div className="col-span-12 my-7 lg:col-span-6 lg:col-start-4 lg:row-start-2 lg:my-4 lg:self-center">
+            <div className="mx-auto w-full lg:max-w-[min(100%,calc(34svh*1.6))]">
             <motion.div
               initial={reduce ? false : { clipPath: 'inset(18% 22% 18% 22%)', opacity: 0.4 }}
               animate={{ clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 }}
@@ -76,6 +77,7 @@ export function Hero() {
                 </span>
               </div>
             </motion.div>
+            </div>
           </div>
 
           {/* Bottom row — copy and CTAs left, line two right */}
@@ -100,11 +102,11 @@ export function Hero() {
           <motion.p
             aria-hidden
             {...rise(0.2)}
-            className="display col-span-12 row-start-4 text-right text-[clamp(44px,8.4vw,132px)] font-medium text-forest lg:col-span-8 lg:col-start-5 lg:row-start-3 lg:self-end"
+            className="display col-span-12 row-start-4 text-right text-[clamp(40px,11vw,72px)] lg:text-[min(6.4vw,12.5svh)] font-medium text-forest lg:col-span-8 lg:col-start-5 lg:row-start-3 lg:self-end"
           >
             for stronger
             <br />
-            industrial performance
+            <span className="lg:whitespace-nowrap">industrial performance</span>
           </motion.p>
         </div>
       </div>

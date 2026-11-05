@@ -82,11 +82,6 @@ export const photos = {
     alt: 'Rows of steel chemical drums stored in a warehouse',
     focus: '50% 50%',
   },
-  drumsStacked: {
-    id: '1702943545007-82ec194737c7',
-    alt: 'Sealed industrial chemical drums stacked for dispatch',
-    focus: '50% 50%',
-  },
   gears: {
     id: '1752692778846-44ce22202d5b',
     alt: 'Pile of hardened steel gear blanks',

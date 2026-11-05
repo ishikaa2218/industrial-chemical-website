@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/instrument-sans';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+
+/* ------------------------------------------------------------------
+   Design tokens
+   ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --color-paper: #f7f7f3;
+  --color-white: #ffffff;
+  --color-stone: #e9eae6;
+  --color-stone-2: #dcdfd9;
+  --color-forest: #244a43;
+  --color-forest-deep: #1b3833;
+  --color-teal: #50776f;
+  --color-teal-soft: #c9d6d2;
+  --color-ink: #303a38;
+  --color-ink-soft: #5c6764;
+  --color-ink-mute: #8a938f;
+  --color-copper: #b77b51;
+  --color-copper-soft: #ead9cb;
+
+  --radius-panel: 6px;
+  --radius-chip: 3px;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 96px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-stone font-sans text-ink;
+    font-feature-settings: 'ss01', 'cv11';
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-medium text-ink;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper);
+    outline-offset: 3px;
+  }
+
+  img {
+    @apply select-none;
+  }
+}
+
+@layer components {
+  /* Framed panel — the core composition unit borrowed from the reference */
+  .panel {
+    @apply rounded-[var(--radius-panel)] bg-white;
+  }
+
+  .shell {
+    @apply mx-auto w-full max-w-[1480px] px-2 sm:px-2.5;
+  }
+
+  .label {
+    @apply font-mono text-[11px] font-medium tracking-[0.09em] uppercase;
+  }
+
+  .display {
+    letter-spacing: -0.045em;
+    line-height: 0.94;
+  }
+
+  .hairline {
+    @apply border-ink/12;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-out-quart);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

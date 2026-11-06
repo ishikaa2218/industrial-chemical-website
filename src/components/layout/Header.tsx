@@ -3,18 +3,24 @@ import { Link, NavLink, useLocation } from 'react-router'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone } from 'lucide-react'
 import { nav, site } from '../../data/site'
+import { ease } from '../../motion/tokens'
 import { LogoMark } from '../common/Logo'
 
+/**
+ * Full-width header. On the home page it sits transparently over the
+ * full-bleed hero and turns solid once the visitor scrolls.
+ */
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
   const reduce = useReducedMotion()
+  const overHero = pathname === '/' && !scrolled && !open
 
   useEffect(() => setOpen(false), [pathname])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -24,57 +30,65 @@ export function Header() {
     document.body.style.overflow = open ? 'hidden' : ''
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
   }, [open])
 
+  const tone = overHero ? 'text-paper' : 'text-ink'
+
   return (
-    <header className="sticky top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50">
       <div
-        className={`transition-[background-color,box-shadow] duration-500 ${
-          scrolled ? 'bg-stone/85 shadow-[0_1px_0_rgba(48,58,56,0.08)] backdrop-blur-md' : 'bg-stone'
+        className={`border-b transition-[background-color,border-color,backdrop-filter] duration-500 ${
+          overHero
+            ? 'border-paper/15 bg-gradient-to-b from-black/35 to-transparent'
+            : 'border-ink/10 bg-paper/88 backdrop-blur-md'
         }`}
       >
-        <div className="shell flex h-[60px] items-center gap-[3px] py-2 sm:h-[64px]">
-          {/* Brand block */}
-          <Link
-            to="/"
-            aria-label={`${site.name} — home`}
-            className="flex h-full min-w-0 flex-1 items-center justify-between gap-4 rounded-[var(--radius-chip)] bg-forest px-3.5 text-paper lg:max-w-[330px]"
-          >
-            <span className="flex items-center gap-2.5">
-              <LogoMark className="size-[22px] text-paper" />
-              <span className="text-[15px] font-semibold tracking-[-0.02em] whitespace-nowrap">{site.name}</span>
+        <div className={`container-wide flex h-[var(--header-h)] items-center gap-6 ${tone} transition-colors duration-500`}>
+          {/* Brand */}
+          <Link to="/" aria-label={`${site.name} — home`} className="flex shrink-0 items-center gap-3">
+            <span
+              className={`grid size-9 place-items-center rounded-[3px] transition-colors duration-500 ${
+                overHero ? 'bg-paper/12 text-paper' : 'bg-forest text-paper'
+              }`}
+            >
+              <LogoMark className="size-[18px]" />
             </span>
-            <span className="label hidden text-right text-[9px] leading-[1.25] text-paper/65 sm:block">
-              {site.descriptor}
-              <br />
-              {site.tagline}
+            <span className="leading-none">
+              <span className="block text-[16px] font-semibold tracking-[-0.02em] whitespace-nowrap">{site.name}</span>
+              <span className={`label mt-1 hidden text-[9.5px] sm:block ${overHero ? 'text-paper/65' : 'text-ink-mute'}`}>
+                {site.descriptor} · {site.tagline}
+              </span>
             </span>
           </Link>
 
-          {/* Desktop nav — segmented boxes, as in the reference */}
-          <nav aria-label="Primary" className="hidden h-full flex-1 items-stretch gap-[3px] lg:flex">
-            {nav.map((item) => (
+          {/* Desktop navigation */}
+          <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 lg:flex">
+            {nav.map((item, i) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
-                className={({ isActive }) =>
-                  `relative flex flex-1 items-center justify-center rounded-[var(--radius-chip)] px-3 text-[12.5px] font-medium tracking-[-0.005em] whitespace-nowrap transition-colors duration-300 ${
-                    isActive ? 'bg-white text-forest' : 'bg-white/60 text-ink-soft hover:bg-white hover:text-ink'
-                  }`
-                }
+                className="group relative flex items-baseline gap-1.5 px-3.5 py-2 text-[13.5px] font-medium"
               >
                 {({ isActive }) => (
                   <>
-                    {item.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-active"
-                        className="absolute inset-x-3 bottom-1.5 h-px bg-copper"
-                        transition={{ type: 'spring', stiffness: 380, damping: 34 }}
-                      />
-                    )}
+                    <span className={`font-mono text-[10px] transition-colors duration-300 ${isActive ? 'text-copper' : 'opacity-45'}`}>
+                      0{i + 1}
+                    </span>
+                    <span className={`transition-opacity duration-200 ${isActive ? '' : 'opacity-80 group-hover:opacity-100'}`}>
+                      {item.label}
+                    </span>
+                    {/* underline: grows on hover, stays for the active page */}
+                    <span
+                      aria-hidden
+                      className={`absolute inset-x-3.5 bottom-0.5 h-px origin-left bg-current transition-transform duration-300 ease-out ${
+                        isActive ? 'scale-x-100 !bg-copper' : 'scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100'
+                      }`}
+                    />
                   </>
                 )}
               </NavLink>
@@ -83,10 +97,13 @@ export function Header() {
 
           <Link
             to="/contact"
-            className="group hidden h-full items-center gap-6 rounded-[var(--radius-chip)] bg-copper pr-3 pl-4 text-[12.5px] font-medium text-white transition-colors duration-300 hover:bg-[#a56b43] sm:flex lg:min-w-[190px] lg:justify-between"
+            className="group ml-auto hidden h-11 items-center gap-5 rounded-[var(--radius-chip)] bg-copper pr-3.5 pl-4.5 text-[13.5px] font-medium text-white transition-[background-color,transform] duration-200 hover:bg-[#a56b43] active:scale-[0.985] sm:flex lg:ml-2"
           >
             Get a Quote
-            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.6} />
+            <ArrowUpRight
+              className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              strokeWidth={1.6}
+            />
           </Link>
 
           <button
@@ -94,16 +111,14 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="flex h-full items-center gap-2.5 rounded-[var(--radius-chip)] bg-white px-3.5 text-[12.5px] font-medium lg:hidden"
+            className={`ml-auto flex h-11 items-center gap-3 rounded-[var(--radius-chip)] border px-4 text-[13px] font-medium transition-colors duration-300 sm:ml-0 lg:hidden ${
+              overHero ? 'border-paper/30' : 'border-ink/15 bg-white'
+            }`}
           >
             <span>{open ? 'Close' : 'Menu'}</span>
             <span aria-hidden className="relative block h-2.5 w-4">
-              <span
-                className={`absolute left-0 h-px w-4 bg-ink transition-transform duration-300 ${open ? 'top-1/2 rotate-45' : 'top-0'}`}
-              />
-              <span
-                className={`absolute left-0 h-px w-4 bg-ink transition-transform duration-300 ${open ? 'top-1/2 -rotate-45' : 'bottom-0'}`}
-              />
+              <span className={`absolute left-0 h-px w-4 bg-current transition-transform duration-300 ${open ? 'top-1/2 rotate-45' : 'top-0'}`} />
+              <span className={`absolute left-0 h-px w-4 bg-current transition-transform duration-300 ${open ? 'top-1/2 -rotate-45' : 'bottom-0'}`} />
             </span>
           </button>
         </div>
@@ -115,26 +130,26 @@ export function Header() {
           <motion.div
             id="mobile-menu"
             key="mobile-menu"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
-            className="fixed inset-x-0 top-[60px] bottom-0 overflow-y-auto bg-stone px-2 pb-2 sm:top-[64px] sm:px-2.5 lg:hidden"
+            initial={reduce ? { opacity: 0 } : { clipPath: 'inset(0 0 100% 0)' }}
+            animate={reduce ? { opacity: 1 } : { clipPath: 'inset(0 0 0% 0)' }}
+            exit={reduce ? { opacity: 0 } : { clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.55, ease: ease.inOut }}
+            className="fixed inset-x-0 top-[var(--header-h)] bottom-0 overflow-y-auto bg-paper lg:hidden"
           >
-            <div className="panel flex min-h-full flex-col justify-between p-5">
+            <div className="gutter flex min-h-full flex-col justify-between pt-4 pb-8">
               <nav aria-label="Mobile" className="flex flex-col">
                 {nav.map((item, i) => (
                   <motion.div
                     key={item.to}
-                    initial={reduce ? false : { opacity: 0, y: 16 }}
+                    initial={reduce ? false : { opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 + i * 0.06, duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+                    transition={{ delay: 0.18 + i * 0.06, duration: 0.5, ease: ease.out }}
                   >
                     <NavLink
                       to={item.to}
                       end={item.to === '/'}
                       className={({ isActive }) =>
-                        `flex items-baseline gap-4 border-b border-ink/10 py-4 text-[30px] font-medium tracking-[-0.035em] ${
+                        `flex items-baseline gap-4 border-b border-ink/10 py-5 text-[32px] font-medium tracking-[-0.035em] ${
                           isActive ? 'text-forest' : 'text-ink'
                         }`
                       }
@@ -145,22 +160,27 @@ export function Header() {
                   </motion.div>
                 ))}
               </nav>
-              <div className="mt-10 space-y-3">
+              <motion.div
+                initial={reduce ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.45, duration: 0.4 }}
+                className="mt-10 space-y-2"
+              >
                 <Link
                   to="/contact"
-                  className="flex h-12 items-center justify-between rounded-[var(--radius-chip)] bg-copper px-4 text-[14px] font-medium text-white"
+                  className="flex h-13 items-center justify-between rounded-[var(--radius-chip)] bg-copper px-4 text-[15px] font-medium text-white"
                 >
                   Get a Quote <ArrowUpRight className="size-4" strokeWidth={1.6} />
                 </Link>
-                <div className="grid grid-cols-2 gap-[3px] text-[13px]">
-                  <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 rounded-[var(--radius-chip)] bg-paper px-3 py-3">
+                <div className="grid grid-cols-2 gap-2 text-[14px]">
+                  <a href={`mailto:${site.contact.email}`} className="flex h-12 items-center gap-2 rounded-[var(--radius-chip)] bg-white px-3.5">
                     <Mail className="size-4 text-teal" strokeWidth={1.6} /> Email
                   </a>
-                  <a href={`tel:${site.contact.phoneHref}`} className="flex items-center gap-2 rounded-[var(--radius-chip)] bg-paper px-3 py-3">
+                  <a href={`tel:${site.contact.phoneHref}`} className="flex h-12 items-center gap-2 rounded-[var(--radius-chip)] bg-white px-3.5">
                     <Phone className="size-4 text-teal" strokeWidth={1.6} /> Call
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}

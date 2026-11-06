@@ -17,6 +17,13 @@ React 19 · TypeScript · Vite · Tailwind CSS v4 · Framer Motion · React Rout
 | `/products` | Products & Applications — five categories plus trading & distribution, sticky category navigation, enquiry links |
 | `/contact` | Contact Us — validated enquiry form, contact details, map placeholder |
 
+## Layout & motion system
+
+- **Full-bleed layout** — every section is a full-width band (`Section` in `src/components/common/Section.tsx`); content sits in `.container-wide`, which uses fluid gutters (`--gutter`) instead of a narrow centred column.
+- **Motion tokens** — `src/motion/tokens.ts` defines the shared easing curves and durations (UI feedback ~0.2 s, reveals ~0.75 s, image wipes ~1.15 s).
+- **Motion primitives** — `src/components/motion` provides `Reveal`, `Stagger`/`Item`, `MaskLines` (line-by-line heading masks), `ClipReveal` (clip-path image wipes), `Parallax` and `ScrollWords` (scroll-linked reading highlight). All respect `prefers-reduced-motion`.
+- **Interactive sections** — pinned product-category story on the home page (swipe carousel on small screens), industries contact sheet with monochrome-to-colour frames and a keyboard-accessible detail sheet, product explorer tabs on the Products page.
+
 ## Development
 
 ```bash

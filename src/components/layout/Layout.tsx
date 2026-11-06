@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useScrollRestoration } from '../../hooks/useScrollRestoration'
+import { dur, ease } from '../../motion/tokens'
 
 /** Keeps the outgoing page mounted during the exit animation. */
 function FrozenOutlet() {
@@ -30,11 +31,10 @@ export function Layout() {
         <motion.main
           id="main"
           key={location.pathname}
-          className="flex-1"
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.38, ease: [0.25, 1, 0.5, 1] }}
+          className={`flex-1 ${location.pathname === '/' ? '' : 'pt-[var(--header-h)]'}`}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: dur.swap, ease: ease.out } }}
+          exit={{ opacity: 0, y: reduce ? 0 : -8, transition: { duration: 0.22, ease: ease.inOut } }}
         >
           <FrozenOutlet />
         </motion.main>

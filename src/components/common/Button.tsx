@@ -23,6 +23,7 @@ type Props = {
   type?: 'button' | 'submit'
   onClick?: () => void
   external?: boolean
+  disabled?: boolean
 }
 
 export function Button({
@@ -36,8 +37,9 @@ export function Button({
   type = 'button',
   onClick,
   external,
+  disabled,
 }: Props) {
-  const cls = `group inline-flex items-center justify-between gap-6 rounded-[var(--radius-chip)] font-medium transition-colors duration-300 ${
+  const cls = `group inline-flex items-center justify-between gap-6 rounded-[var(--radius-chip)] font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out active:scale-[0.985] disabled:pointer-events-none disabled:opacity-45 ${
     size === 'sm' ? 'h-8 pl-3 pr-2 text-[12px]' : 'h-12 pl-5 pr-3.5 text-[14px]'
   } ${styles[variant]} ${className}`
   const inner = (
@@ -47,20 +49,25 @@ export function Button({
         <ArrowUpRight
           aria-hidden
           strokeWidth={1.6}
-          className={`${size === 'sm' ? 'size-3.5' : 'size-4.5'} transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
+          className={`${size === 'sm' ? 'size-3.5' : 'size-4.5'} transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1 group-focus-visible:translate-x-1 group-focus-visible:-translate-y-1`}
         />
       )}
     </>
   )
-  if (to) return <Link to={to} className={cls}>{inner}</Link>
+  if (to)
+    return (
+      <Link to={to} className={cls} onClick={onClick}>
+        {inner}
+      </Link>
+    )
   if (href)
     return (
-      <a href={href} className={cls} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+      <a href={href} className={cls} onClick={onClick} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
         {inner}
       </a>
     )
   return (
-    <button type={type} onClick={onClick} className={cls}>
+    <button type={type} onClick={onClick} className={cls} disabled={disabled}>
       {inner}
     </button>
   )

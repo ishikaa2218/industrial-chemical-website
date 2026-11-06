@@ -1,115 +1,113 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowDown } from 'lucide-react'
 import { Button } from '../../common/Button'
 import { Photo } from '../../common/Photo'
-
-const ease = [0.25, 1, 0.5, 1] as const
+import { MaskLines } from '../../motion'
+import { ease } from '../../../motion/tokens'
 
 const focusAreas = ['Steel hardening', 'Heat treatment', 'Automotive components', 'Metal processing']
 
+/**
+ * Full-bleed hero. Sequence on load: image wipes open and settles →
+ * headline lines rise from their masks → copy → CTAs → index row.
+ * On scroll the photograph drifts and the copy lifts away.
+ */
 export function Hero() {
   const reduce = useReducedMotion()
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', reduce ? '0%' : '8%'])
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', reduce ? '0%' : '18%'])
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.08])
+  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduce ? '0%' : '-18%'])
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0])
 
-  const rise = (delay: number) =>
+  const enter = (delay: number) =>
     reduce
       ? {}
-      : {
-          initial: { opacity: 0, y: 28 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 1, delay, ease },
-        }
+      : { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, delay, ease: ease.out } }
 
   return (
-    <section ref={ref} className="shell" aria-labelledby="hero-title">
-      <div className="panel relative overflow-hidden px-4 pt-8 pb-5 sm:px-8 sm:pt-10 lg:min-h-[calc(100svh-74px)] lg:px-10 lg:pt-10 lg:pb-8">
-        <h1 id="hero-title" className="sr-only">
-          Advanced Chemical Solutions for Stronger Industrial Performance
-        </h1>
-
-        <div className="grid grid-cols-12 gap-x-4 lg:h-full lg:min-h-[calc(100svh-74px-72px)] lg:grid-rows-[auto_1fr_auto]">
-          {/* Line one — top left */}
-          <motion.p
-            aria-hidden
-            {...rise(0.1)}
-            className="display col-span-12 text-[clamp(40px,11vw,72px)] lg:text-[min(6.4vw,12.5svh)] font-medium text-ink lg:col-span-9"
+    <section
+      ref={ref}
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-forest-deep text-paper lg:h-[100svh] lg:min-h-[680px]"
+    >
+      {/* Photograph — clip-path wipe + settle, then scroll-linked drift */}
+      <motion.div
+        className="absolute inset-0 -z-10"
+        initial={reduce ? false : { clipPath: 'inset(12% 10% 12% 10%)' }}
+        animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+        transition={{ duration: 1.4, ease: ease.inOut }}
+      >
+        <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0">
+          <motion.div
+            className="absolute inset-0"
+            initial={reduce ? false : { scale: 1.18 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 2.2, ease: ease.settle }}
           >
-            <span className="lg:whitespace-nowrap">Advanced chemical</span>
-            <br />
-            solutions
-          </motion.p>
+            <Photo k="heroMill" priority sizes="100vw" className="absolute inset-0" />
+          </motion.div>
+        </motion.div>
+        {/* Legibility washes — warm-dark at the base, light at the top for the header */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#0f1d1a]/92 via-[#0f1d1a]/40 to-[#0f1d1a]/25" />
+        <div aria-hidden className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-[#0f1d1a]/55 to-transparent" />
+      </motion.div>
 
-          {/* Focus areas — right column */}
-          <motion.ul
-            {...rise(0.35)}
-            className="col-span-12 mt-6 flex flex-wrap gap-x-5 gap-y-1.5 lg:col-span-3 lg:mt-3 lg:flex-col lg:items-end lg:gap-y-1.5 lg:text-right"
-          >
-            {focusAreas.map((f, i) => (
-              <li key={f} className="label flex items-center gap-2 text-ink-soft">
-                <span className="text-copper">0{i + 1}</span> {f}
-              </li>
-            ))}
-          </motion.ul>
-
-          {/* Central image — takes the place of the reference's centrepiece */}
-          <div className="col-span-12 my-7 lg:col-span-6 lg:col-start-4 lg:row-start-2 lg:my-4 lg:self-center">
-            <div className="mx-auto w-full lg:max-w-[min(100%,calc(34svh*1.6))]">
-            <motion.div
-              initial={reduce ? false : { clipPath: 'inset(18% 22% 18% 22%)', opacity: 0.4 }}
-              animate={{ clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 }}
-              transition={{ duration: 1.4, delay: 0.25, ease: [0.65, 0, 0.35, 1] }}
-              className="relative overflow-hidden rounded-[4px]"
-            >
-              <motion.div style={{ y: imgY }} className="scale-[1.08]">
-                <Photo
-                  k="heroMill"
-                  ratio={16 / 10}
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="aspect-[16/10] w-full"
-                />
+      <motion.div style={{ y: copyY, opacity: copyOpacity }} className="container-wide flex flex-1 flex-col justify-end pt-[calc(var(--header-h)+56px)] pb-6 lg:pb-8">
+        <div className="grid grid-cols-12 items-end gap-x-6 gap-y-8">
+          <MaskLines
+            id="hero-title"
+            as="h1"
+            trigger="mount"
+            delay={0.45}
+            className="t-display col-span-12 lg:col-span-8"
+            lines={['Advanced chemical', 'solutions for stronger', 'industrial performance']}
+            lineClassName={(i) => (i === 2 ? 'text-[#e4bfa0]' : 'text-paper')}
+          />
+          <div className="col-span-12 sm:col-span-8 lg:col-span-4 lg:pb-3 xl:col-span-3 xl:col-start-10">
+            <motion.p {...enter(0.95)} className="max-w-[40ch] text-[15.5px] leading-relaxed text-paper/80">
+              Specialised chemical manufacturing and supply for steel hardening, heat treatment and automotive component
+              manufacturing — produced and sourced for consistent results on the shop floor.
+            </motion.p>
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row lg:flex-col">
+              <motion.div {...enter(1.08)}>
+                <Button to="/products" variant="copper" className="w-full sm:min-w-[210px]">
+                  Explore Our Products
+                </Button>
               </motion.div>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between p-3 sm:p-4">
-                <span className="label rounded-[2px] bg-white/90 px-2 py-1 text-ink backdrop-blur-sm">
-                  Rolling mill · hot steel
-                </span>
-              </div>
-            </motion.div>
+              <motion.div {...enter(1.16)}>
+                <Button to="/contact" variant="ghost-light" className="w-full">
+                  Contact Us
+                </Button>
+              </motion.div>
             </div>
           </div>
-
-          {/* Bottom row — copy and CTAs left, line two right */}
-          <motion.div
-            {...rise(0.55)}
-            className="col-span-12 row-start-5 mt-8 max-w-[400px] self-end lg:col-span-4 lg:row-start-3 lg:mt-0"
-          >
-            <p className="text-[15px] leading-[1.55] text-ink-soft">
-              Specialised chemical manufacturing and supply for steel hardening, heat treatment and automotive
-              component manufacturing — produced and sourced for consistent results on the shop floor.
-            </p>
-            <div className="mt-6 flex flex-col gap-[3px] sm:flex-row">
-              <Button to="/products" className="sm:min-w-[220px]">
-                Explore Our Products
-              </Button>
-              <Button to="/contact" variant="outline">
-                Contact Us
-              </Button>
-            </div>
-          </motion.div>
-
-          <motion.p
-            aria-hidden
-            {...rise(0.2)}
-            className="display col-span-12 row-start-4 text-right text-[clamp(40px,11vw,72px)] lg:text-[min(6.4vw,12.5svh)] font-medium text-forest lg:col-span-8 lg:col-start-5 lg:row-start-3 lg:self-end"
-          >
-            for stronger
-            <br />
-            <span className="lg:whitespace-nowrap">industrial performance</span>
-          </motion.p>
         </div>
-      </div>
+
+        {/* Index row spanning the full width */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.3 }}
+          className="mt-10 grid grid-cols-2 border-t border-paper/20 pt-4 sm:grid-cols-4 lg:mt-14 lg:grid-cols-[repeat(4,1fr)_auto]"
+        >
+          {focusAreas.map((f, i) => (
+            <p key={f} className="label flex gap-2 py-1.5 text-paper/75">
+              <span className="text-copper">0{i + 1}</span>
+              {f}
+            </p>
+          ))}
+          <a
+            href="#intro"
+            className="label group hidden items-center gap-2 py-1.5 text-paper/75 transition-colors hover:text-paper lg:flex"
+          >
+            Scroll
+            <ArrowDown className="size-3.5 transition-transform duration-300 group-hover:translate-y-0.5" strokeWidth={1.6} />
+          </a>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

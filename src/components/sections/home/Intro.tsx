@@ -1,7 +1,7 @@
 import { Button } from '../../common/Button'
-import { Label } from '../../common/Label'
 import { Photo } from '../../common/Photo'
-import { Reveal } from '../../common/Reveal'
+import { Container, Section } from '../../common/Section'
+import { ClipReveal, Item, Parallax, ScrollWords, Stagger } from '../../motion'
 
 const pillars = [
   {
@@ -24,71 +24,68 @@ const pillars = [
 
 export function Intro() {
   return (
-    <section className="shell pt-2.5" aria-labelledby="intro-title">
-      <div className="panel px-4 py-10 sm:px-8 lg:px-10 lg:py-14">
-        <div className="grid grid-cols-12 gap-x-4 gap-y-8">
-          <div className="col-span-12 flex items-start justify-between lg:col-span-3 lg:block">
-            <Label>About the company</Label>
-            <div className="lg:hidden">
-              <Button to="/about" variant="forest" size="sm">
+    <Section id="intro" tone="paper" labelledBy="intro-title" className="scroll-mt-0">
+      <Container className="grid grid-cols-12 gap-x-6 gap-y-10 pt-20 pb-16 lg:pt-32 lg:pb-24">
+        <p className="label col-span-12 text-ink-soft lg:col-span-3">
+          <span className="text-copper">01</span> · About the company
+        </p>
+
+        {/* Scroll-read statement */}
+        <div className="col-span-12 lg:col-span-9">
+          <h2 id="intro-title" className="sr-only">
+            About the company
+          </h2>
+          <ScrollWords
+            className="max-w-[26ch] text-[clamp(28px,3.6vw,64px)] leading-[1.06] font-medium tracking-[-0.038em] text-ink"
+            text="We manufacture and trade industrial chemicals for the processes that make steel stronger — hardening, heat treatment and the manufacture of automotive components."
+          />
+        </div>
+
+        {/* Layered image pair + supporting copy */}
+        <div className="relative col-span-12 mt-6 grid grid-cols-12 gap-x-6 gap-y-10 lg:mt-14">
+          <div className="relative col-span-12 sm:col-span-7 lg:col-span-5 lg:col-start-1">
+            <ClipReveal from="up" className="group rounded-[3px]">
+              <Photo k="chemicalPlant" ratio={4 / 5} tint zoom sizes="(min-width:1024px) 40vw, 90vw" className="aspect-[4/5] w-full" />
+            </ClipReveal>
+            <Parallax distance={50} className="absolute -right-6 -bottom-10 hidden w-[44%] sm:block lg:-right-16">
+              <ClipReveal from="left" delay={0.2} className="group rounded-[3px] ring-8 ring-paper">
+                <Photo k="labBeaker" ratio={1} tint zoom sizes="20vw" className="aspect-square w-full" />
+              </ClipReveal>
+            </Parallax>
+          </div>
+
+          <div className="col-span-12 flex flex-col justify-end sm:col-span-5 lg:col-span-4 lg:col-start-8">
+            <p className="t-lead text-ink-soft">
+              Our customers need chemicals that behave the same way, batch after batch, and a supplier who understands
+              why that matters on a hardening line. That is the standard we hold ourselves to.
+            </p>
+            <div className="mt-8">
+              <Button to="/about" variant="outline">
                 More about us
               </Button>
             </div>
           </div>
-
-          {/* Small image card — echoes the profile card in the reference */}
-          <Reveal className="col-span-12 sm:col-span-5 lg:col-span-3">
-            <figure className="flex gap-3 border-t border-ink/12 pt-4 sm:block">
-              <Photo k="chemicalPlant" ratio={4 / 3} sizes="(min-width: 1024px) 22vw, 40vw" className="aspect-[4/3] w-28 shrink-0 rounded-[3px] sm:w-full" />
-              <figcaption className="sm:mt-3">
-                <p className="text-[14px] font-medium">Manufacturing &amp; Trading</p>
-                <p className="label mt-1 text-ink-mute">Industrial chemicals · B2B supply</p>
-                <p className="mt-3 text-[13px] leading-relaxed text-ink-soft">
-                  One supplier for manufactured specialty chemistry and traded process chemicals.
-                </p>
-              </figcaption>
-            </figure>
-          </Reveal>
-
-          <div className="col-span-12 sm:col-span-7 lg:col-span-5">
-            <Reveal>
-              <h2 id="intro-title" className="text-[clamp(24px,2.6vw,36px)] leading-[1.18] font-medium tracking-[-0.03em]">
-                We manufacture and trade industrial chemicals for the processes that make steel stronger — hardening,
-                heat treatment and the manufacture of automotive components.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 max-w-[54ch] text-[16px] leading-relaxed text-ink-soft">
-                Our customers need chemicals that behave the same way, batch after batch, and a supplier who
-                understands why that matters on a hardening line. That is the standard we hold ourselves to.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="hidden justify-end lg:col-span-1 lg:flex">
-            <Button to="/about" variant="forest" size="sm" className="whitespace-nowrap">
-              More about us
-            </Button>
-          </div>
         </div>
+      </Container>
 
-        <dl className="mt-14 grid grid-cols-1 border-t border-ink/12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+      {/* Pillars — dividers run edge to edge */}
+      <div className="border-y border-ink/12">
+        <Stagger as="dl" className="container-wide grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <Reveal
+            <Item
               key={p.k}
-              delay={i * 0.06}
-              className={`border-b border-ink/12 py-6 sm:pr-6 lg:border-b-0 lg:py-7 ${i > 0 ? 'lg:border-l lg:pl-6' : ''} ${
-                i % 2 === 1 ? 'sm:border-l sm:pl-6 lg:pl-6' : ''
-              }`}
+              className={`border-ink/12 py-8 sm:pr-8 lg:py-10 ${i > 0 ? 'border-t sm:border-t-0' : ''} ${
+                i % 2 === 1 ? 'sm:border-l sm:pl-8' : ''
+              } ${i === 2 ? 'sm:border-t lg:border-t-0 lg:border-l lg:pl-8' : ''} ${i === 3 ? 'sm:border-t lg:border-t-0' : ''}`}
             >
               <dt className="label flex items-center gap-2 text-forest">
                 <span className="text-copper">[0{i + 1}]</span> {p.k}
               </dt>
-              <dd className="mt-3 text-[14px] leading-relaxed text-ink-soft">{p.v}</dd>
-            </Reveal>
+              <dd className="mt-3 max-w-[38ch] text-[15px] leading-relaxed text-ink-soft">{p.v}</dd>
+            </Item>
           ))}
-        </dl>
+        </Stagger>
       </div>
-    </section>
+    </Section>
   )
 }

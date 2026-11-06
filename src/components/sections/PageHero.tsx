@@ -1,64 +1,80 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import type { PhotoKey } from '../../data/images'
+import { ease } from '../../motion/tokens'
 import { Photo } from '../common/Photo'
+import { MaskLines } from '../motion'
 
 type Props = {
   index: string
   label: string
-  title: ReactNode
+  /** heading split into lines for the mask reveal */
+  lines: ReactNode[]
+  /** which line (0-based) is set in the accent colour */
+  accentLine?: number
   intro: ReactNode
   photo?: PhotoKey
   photoCaption?: string
   children?: ReactNode
 }
 
-const ease = [0.25, 1, 0.5, 1] as const
-
-export function PageHero({ index, label, title, intro, photo, photoCaption, children }: Props) {
+/**
+ * Inner-page hero. Heading rises line by line; the photograph below
+ * starts inset within the gutters and opens to full bleed as you scroll.
+ */
+export function PageHero({ index, label, lines, accentLine, intro, photo, photoCaption, children }: Props) {
   const reduce = useReducedMotion()
-  const rise = (delay: number) =>
-    reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease } }
+  const figRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: figRef, offset: ['start end', 'start 15%'] })
+  const inset = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [4, 0])
+  const radius = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [6, 0])
+  const clipPath = useTransform([inset, radius], ([i, r]) => `inset(0% ${i}% 0% ${i}% round ${r}px)`)
+  const imgY = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['-6%', '0%'])
+
+  const enter = (delay: number) =>
+    reduce ? {} : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, delay, ease: ease.out } }
 
   return (
-    <section className="shell">
-      <div className="panel px-4 pt-8 pb-4 sm:px-8 sm:pt-10 lg:px-10 lg:pt-12">
-        <div className="grid grid-cols-12 gap-x-4 gap-y-6">
-          <motion.p {...rise(0)} className="label col-span-12 flex gap-3 text-ink-soft lg:col-span-3">
-            <span className="text-copper">{index}</span>
-            {label}
-          </motion.p>
-          <motion.h1
-            {...rise(0.08)}
-            className="col-span-12 text-[clamp(38px,6vw,96px)] leading-[0.98] font-medium tracking-[-0.045em] lg:col-span-9"
-          >
-            {title}
-          </motion.h1>
-          <motion.div
-            {...rise(0.18)}
-            className="col-span-12 text-[16px] leading-relaxed text-ink-soft sm:col-span-8 lg:col-span-5 lg:col-start-4"
-          >
-            {intro}
+    <section className="w-full bg-paper">
+      <div className="container-wide grid grid-cols-12 gap-x-6 gap-y-8 pt-14 pb-12 lg:pt-24 lg:pb-16">
+        <motion.p {...enter(0)} className="label col-span-12 flex gap-3 text-ink-soft lg:col-span-3 lg:pt-4">
+          <span className="text-copper">{index}</span>
+          {label}
+        </motion.p>
+        <MaskLines
+          as="h1"
+          trigger="mount"
+          delay={0.1}
+          className="t-h1 col-span-12 lg:col-span-9"
+          lines={lines}
+          lineClassName={(i) => (i === accentLine ? 'text-forest' : '')}
+        />
+        <motion.div {...enter(0.45)} className="t-lead col-span-12 text-ink-soft sm:col-span-9 lg:col-span-5 lg:col-start-4">
+          {intro}
+        </motion.div>
+        {children && (
+          <motion.div {...enter(0.55)} className="col-span-12 lg:col-span-3 lg:col-start-10 lg:self-end">
+            {children}
           </motion.div>
-          {children && (
-            <motion.div {...rise(0.24)} className="col-span-12 lg:col-span-4 lg:col-start-9 lg:self-end">
-              {children}
-            </motion.div>
-          )}
-        </div>
-
-        {photo && (
-          <motion.figure
-            initial={reduce ? false : { clipPath: 'inset(30% 0 0 0)', opacity: 0.3 }}
-            animate={{ clipPath: 'inset(0% 0 0 0)', opacity: 1 }}
-            transition={{ duration: 1.3, delay: 0.2, ease: [0.65, 0, 0.35, 1] }}
-            className="mt-10 lg:mt-14"
-          >
-            <Photo k={photo} ratio={21 / 9} priority sizes="100vw" className="aspect-[4/3] w-full rounded-[4px] sm:aspect-[21/9]" />
-            {photoCaption && <figcaption className="label mt-3 text-ink-mute">{photoCaption}</figcaption>}
-          </motion.figure>
         )}
       </div>
+
+      {photo && (
+        <figure ref={figRef} className="relative">
+          <motion.div
+            style={{ clipPath }}
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="relative h-[52svh] overflow-hidden sm:h-[68svh] lg:h-[82svh]"
+          >
+            <motion.div style={{ y: imgY }} className="absolute -inset-y-[8%] inset-x-0">
+              <Photo k={photo} priority sizes="100vw" className="absolute inset-0" />
+            </motion.div>
+          </motion.div>
+          {photoCaption && <figcaption className="label container-wide mt-3 text-ink-mute">{photoCaption}</figcaption>}
+        </figure>
+      )}
     </section>
   )
 }

@@ -1,35 +1,36 @@
-import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Check } from 'lucide-react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ArrowDown, ArrowUpRight, Check } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '../components/common/Button'
-import { Label } from '../components/common/Label'
 import { Photo } from '../components/common/Photo'
-import { ImageReveal, Reveal } from '../components/common/Reveal'
 import { Seo } from '../components/common/Seo'
+import { Container, Section } from '../components/common/Section'
+import { ClipReveal, Item, MaskLines, Reveal, Stagger } from '../components/motion'
 import { CtaBand } from '../components/sections/CtaBand'
 import { PageHero } from '../components/sections/PageHero'
 import { categories, type Category } from '../data/content'
+import { dur, ease } from '../motion/tokens'
 
 const sections = [...categories.map((c) => ({ id: c.slug, label: c.shortName })), { id: 'trading', label: 'Trading & Distribution' }]
+const ids = sections.map((s) => s.id)
 
-function useActiveSection(ids: string[]) {
-  const [active, setActive] = useState(ids[0])
+function useActiveSection(list: string[]) {
+  const [active, setActive] = useState(list[0])
   useEffect(() => {
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
+    const els = list.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
     const io = new IntersectionObserver(
       (entries) => {
         const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
         if (visible[0]) setActive(visible[0].target.id)
       },
-      { rootMargin: '-30% 0px -60% 0px' },
+      { rootMargin: '-35% 0px -55% 0px' },
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [ids])
+  }, [list])
   return active
 }
-
-const ids = sections.map((s) => s.id)
 
 export default function Products() {
   const active = useActiveSection(ids)
@@ -40,7 +41,7 @@ export default function Products() {
     const rail = railRef.current
     const chip = rail?.querySelector<HTMLElement>(`a[href="#${active}"]`)
     if (!rail || !chip || rail.scrollWidth <= rail.clientWidth) return
-    rail.scrollTo({ left: chip.offsetLeft - 12, behavior: 'smooth' })
+    rail.scrollTo({ left: chip.offsetLeft - 16, behavior: 'smooth' })
   }, [active])
 
   return (
@@ -54,14 +55,11 @@ export default function Products() {
       <PageHero
         index="03"
         label="Products & applications"
-        title={
-          <>
-            Chemistry for hardening, heat treatment <span className="text-forest">and the parts that depend on them</span>
-          </>
-        }
+        lines={['Chemistry for hardening,', 'heat treatment and the', 'parts that depend on them']}
+        accentLine={2}
         intro={
           <p>
-            Our range is organised by application. Each category below explains where the chemistry is used and which
+            Our range is organised by application. Each category explains where the chemistry is used and which
             industries rely on it. Detailed product names, grades and technical data sheets are available on request.
           </p>
         }
@@ -74,48 +72,52 @@ export default function Products() {
             <span className="size-1.5 rounded-full border border-forest" /> Traded
           </span>
         </div>
-        <p className="mt-2 text-[12px] text-ink-mute">Supply type is marked on each category.</p>
+        <p className="mt-2 text-[12.5px] text-ink-mute">Supply type is marked on each category.</p>
       </PageHero>
 
-      {/* Sticky category navigation */}
-      <nav aria-label="Product categories" className="sticky top-[60px] z-40 sm:top-[64px]">
-        <div className="shell pt-2.5">
-          <ul ref={railRef} className="no-scrollbar relative flex gap-[3px] overflow-x-auto rounded-[var(--radius-panel)] bg-forest p-[3px]">
-            {sections.map((s) => (
-              <li key={s.id} className="shrink-0 lg:flex-1">
-                <a
-                  href={`#${s.id}`}
-                  aria-current={active === s.id ? 'true' : undefined}
-                  className={`block rounded-[var(--radius-chip)] px-3.5 py-2.5 text-center text-[12px] font-medium whitespace-nowrap transition-colors duration-300 ${
-                    active === s.id ? 'bg-paper text-forest' : 'text-paper/75 hover:bg-paper/10 hover:text-paper'
-                  }`}
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <Explorer />
+
+      {/* Sticky category navigation — full width */}
+      <nav aria-label="Product categories" className="sticky top-[var(--header-h)] z-40 w-full border-y border-ink/10 bg-paper/92 backdrop-blur-md">
+        <ul ref={railRef} className="container-wide no-scrollbar relative flex gap-1 overflow-x-auto py-2">
+          {sections.map((s, i) => (
+            <li key={s.id} className="shrink-0 lg:flex-1">
+              <a
+                href={`#${s.id}`}
+                aria-current={active === s.id ? 'true' : undefined}
+                className={`relative flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-chip)] px-4 text-[13px] font-medium whitespace-nowrap transition-colors duration-200 ${
+                  active === s.id ? 'text-paper' : 'text-ink-soft hover:bg-ink/5 hover:text-ink'
+                }`}
+              >
+                {active === s.id && (
+                  <motion.span
+                    layoutId="product-chip"
+                    className="absolute inset-0 -z-10 rounded-[var(--radius-chip)] bg-forest"
+                    transition={{ type: 'spring', stiffness: 420, damping: 38 }}
+                  />
+                )}
+                <span className={`font-mono text-[10px] ${active === s.id ? 'text-copper' : 'text-ink-mute'}`}>0{i + 1}</span>
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       {categories.map((c, i) => (
         <CategorySection key={c.slug} c={c} flip={i % 2 === 1} />
       ))}
 
-      {/* Trading & distribution */}
-      <section id="trading" className="shell scroll-mt-[52px] pt-2.5" aria-labelledby="trading-h">
-        <div className="panel overflow-hidden bg-forest text-paper">
-          <div className="grid grid-cols-12 gap-x-4 gap-y-10 px-4 py-10 sm:px-8 lg:px-10 lg:py-14">
-            <div className="col-span-12 lg:col-span-4">
-              <p className="label text-paper/60">
-                <span className="text-copper">06</span> · Trading &amp; distribution
-              </p>
-              <Reveal>
-                <h2 id="trading-h" className="mt-5 text-[clamp(30px,3.6vw,52px)] leading-[1.02] font-medium tracking-[-0.04em] text-paper">
-                  Chemical trading &amp; distribution
-                </h2>
-              </Reveal>
-              <p className="mt-6 max-w-[40ch] text-[15px] leading-relaxed text-paper/75">
+      {/* Trading & distribution — selected dark section */}
+      <section id="trading" aria-labelledby="trading-h" className="w-full scroll-mt-[60px] bg-forest text-paper">
+        <Container className="grid grid-cols-12 gap-x-6 gap-y-12 py-20 lg:py-28">
+          <div className="col-span-12 lg:col-span-4">
+            <p className="label text-paper/60">
+              <span className="text-copper">06</span> · Trading &amp; distribution
+            </p>
+            <MaskLines id="trading-h" className="t-h2 mt-6 text-paper" lines={['Chemical trading', '& distribution']} />
+            <Reveal>
+              <p className="mt-6 max-w-[42ch] text-[16px] leading-relaxed text-paper/75">
                 Beyond our manufactured range, we trade and distribute industrial chemicals so that customers can
                 consolidate purchasing and keep consumption planned.
               </p>
@@ -124,32 +126,32 @@ export default function Products() {
                   Enquire about sourcing
                 </Button>
               </div>
-            </div>
-            <div className="col-span-12 lg:col-span-8">
-              <ImageReveal>
-                <Photo k="drums" ratio={16 / 9} sizes="(min-width:1024px) 60vw, 100vw" className="aspect-[16/9] w-full rounded-[3px]" />
-              </ImageReveal>
-              <div className="mt-8 grid gap-8 sm:grid-cols-3">
-                {[
-                  { t: 'Sourcing', d: 'Industrial and process chemicals sourced from established producers to the customer’s requirement.' },
-                  { t: 'Stocking', d: 'Material held for regular-use items, so recurring orders are not left to short-notice purchasing.' },
-                  { t: 'Distribution', d: 'Planned deliveries matched to consumption, with one point of contact for every order.' },
-                ].map((x, i) => (
-                  <div key={x.t} className="border-t border-paper/20 pt-4">
-                    <p className="label text-copper">0{i + 1}</p>
-                    <h3 className="mt-2 text-[19px] font-medium tracking-[-0.02em] text-paper">{x.t}</h3>
-                    <p className="mt-2 text-[14px] leading-relaxed text-paper/70">{x.d}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            </Reveal>
           </div>
-        </div>
+          <div className="col-span-12 lg:col-span-8">
+            <ClipReveal from="up" className="group rounded-[3px]">
+              <Photo k="drums" ratio={16 / 9} zoom sizes="(min-width:1024px) 62vw, 100vw" className="aspect-[16/9] w-full" />
+            </ClipReveal>
+            <Stagger className="mt-10 grid gap-8 sm:grid-cols-3">
+              {[
+                { t: 'Sourcing', d: 'Industrial and process chemicals sourced from established producers to the customer’s requirement.' },
+                { t: 'Stocking', d: 'Material held for regular-use items, so recurring orders are not left to short-notice purchasing.' },
+                { t: 'Distribution', d: 'Planned deliveries matched to consumption, with one point of contact for every order.' },
+              ].map((x, i) => (
+                <Item key={x.t} className="border-t border-paper/20 pt-5">
+                  <p className="label text-copper">0{i + 1}</p>
+                  <h3 className="mt-2 text-[20px] font-medium tracking-[-0.02em] text-paper">{x.t}</h3>
+                  <p className="mt-2 text-[14.5px] leading-relaxed text-paper/70">{x.d}</p>
+                </Item>
+              ))}
+            </Stagger>
+          </div>
+        </Container>
       </section>
 
       <CtaBand
         eyebrow="Not sure which product fits?"
-        title="Tell us about your process and we’ll recommend the chemistry"
+        title={['Tell us about your', 'process — we’ll recommend', 'the chemistry']}
         body="Share your material, process and equipment details. Our team will suggest suitable products and send a quotation."
         button="Send a Product Enquiry"
         photo="lathe"
@@ -158,90 +160,188 @@ export default function Products() {
   )
 }
 
+/**
+ * Editorial product navigator: hover, focus or click a category to bring
+ * its photograph and summary forward. Works with keyboard (arrow keys
+ * move between categories) and with taps on touch screens.
+ */
+function Explorer() {
+  const [active, setActive] = useState(0)
+  const reduce = useReducedMotion()
+  const c = categories[active]
+  const listRef = useRef<HTMLDivElement>(null)
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+    e.preventDefault()
+    const next = (active + (e.key === 'ArrowDown' ? 1 : -1) + categories.length) % categories.length
+    setActive(next)
+    listRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus()
+  }
+
+  return (
+    <Section tone="white" labelledBy="explorer-h" divider>
+      <h2 id="explorer-h" className="sr-only">
+        Product range overview
+      </h2>
+      <div className="grid lg:grid-cols-12">
+        {/* Index */}
+        <div className="flex flex-col justify-between gap-10 px-[var(--gutter)] py-12 lg:col-span-6 lg:py-16 lg:pr-12">
+          <div ref={listRef} role="tablist" aria-orientation="vertical" aria-label="Product categories" onKeyDown={onKey} className="border-t border-ink/12">
+            {categories.map((cat, i) => {
+              const on = i === active
+              return (
+                <button
+                  key={cat.slug}
+                  id={`tab-${cat.slug}`}
+                  role="tab"
+                  type="button"
+                  aria-selected={on}
+                  aria-controls="explorer-panel"
+                  tabIndex={on ? 0 : -1}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className="group grid w-full grid-cols-[3rem_1fr_auto] items-center gap-x-3 border-b border-ink/12 py-5 text-left lg:py-6"
+                >
+                  <span className={`label transition-colors duration-200 ${on ? 'text-copper' : 'text-ink-mute'}`}>{cat.index}</span>
+                  <span
+                    className={`text-[clamp(22px,2.3vw,38px)] leading-[1.08] font-medium tracking-[-0.035em] transition-[color,transform] duration-300 ease-out ${
+                      on ? 'translate-x-1.5 text-forest' : 'text-ink/45 group-hover:text-ink'
+                    }`}
+                  >
+                    {cat.name}
+                  </span>
+                  <ArrowUpRight
+                    aria-hidden
+                    strokeWidth={1.6}
+                    className={`size-5 transition-[opacity,transform] duration-300 ${on ? 'text-copper opacity-100' : 'opacity-0'}`}
+                  />
+                </button>
+              )
+            })}
+          </div>
+          <p className="label hidden text-ink-mute lg:block">Hover, tap or use the arrow keys to explore</p>
+        </div>
+
+        {/* Stage — photograph bleeds to the right edge */}
+        <div id="explorer-panel" role="tabpanel" aria-labelledby={`tab-${c.slug}`} className="relative min-h-[520px] overflow-hidden bg-forest-deep text-paper lg:col-span-6 lg:min-h-[720px]">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={c.slug}
+              className="absolute inset-0"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.06 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, ease: ease.out }}
+            >
+              <Photo k={c.photo} sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0" />
+            </motion.div>
+          </AnimatePresence>
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#0f1d1a]/92 via-[#0f1d1a]/30 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={c.slug}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: dur.swap, ease: ease.out, delay: 0.08 } }}
+                exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              >
+                <p className="label text-copper">{c.supply}</p>
+                <p className="mt-3 max-w-[46ch] text-[16px] leading-relaxed text-paper/90">{c.summary}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <Button href={`#${c.slug}`} variant="light" size="sm" icon={false}>
+                    <span className="flex items-center gap-2">
+                      Read more <ArrowDown className="size-3.5" strokeWidth={1.6} />
+                    </span>
+                  </Button>
+                  <Button to={`/contact?requirement=${c.slug}`} variant="ghost-light" size="sm">
+                    Enquire
+                  </Button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
 function CategorySection({ c, flip }: { c: Category; flip: boolean }) {
   return (
-    <section id={c.slug} className="shell scroll-mt-[52px] pt-2.5" aria-labelledby={`${c.slug}-h`}>
-      <div className="panel overflow-hidden">
-        <div className="grid lg:grid-cols-12">
-          {/* Image column */}
-          <div className={`relative lg:col-span-5 ${flip ? 'lg:order-2' : ''}`}>
-            <ImageReveal className="h-full">
-              <Photo
-                k={c.photo}
-                ratio={4 / 5}
-                sizes="(min-width:1024px) 42vw, 100vw"
-                className="aspect-[4/3] h-full w-full lg:aspect-auto lg:min-h-[640px]"
-              />
-            </ImageReveal>
-            <span className="label absolute top-4 left-4 rounded-[2px] bg-white/90 px-2 py-1 text-ink backdrop-blur-sm">
-              {c.index} / 05
-            </span>
+    <section
+      id={c.slug}
+      aria-labelledby={`${c.slug}-h`}
+      className={`w-full scroll-mt-[60px] border-b border-ink/10 ${flip ? 'bg-paper' : 'bg-white'}`}
+    >
+      <div className="grid lg:grid-cols-2">
+        {/* Photograph — bleeds to its viewport edge and stays in view while the copy scrolls */}
+        <div className={`relative ${flip ? 'lg:order-2' : ''}`}>
+          <div className="lg:sticky lg:top-[calc(var(--header-h)+60px)] lg:h-[calc(100svh-var(--header-h)-60px)]">
+            <ClipReveal from={flip ? 'left' : 'right'} className="group relative aspect-[4/3] h-full w-full lg:aspect-auto">
+              <Photo k={c.photo} zoom sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0" />
+              <span className="label absolute top-4 left-4 rounded-[2px] bg-white/90 px-2 py-1 text-ink">{c.index} / 05</span>
+            </ClipReveal>
           </div>
+        </div>
 
-          {/* Content column */}
-          <div className={`flex flex-col justify-between gap-10 px-4 py-8 sm:px-8 lg:col-span-7 lg:px-12 lg:py-12 ${flip ? 'lg:order-1' : ''}`}>
-            <div>
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <Label tone="copper">Category {c.index}</Label>
-                <span className="rounded-[var(--radius-chip)] border border-dashed border-ink/25 px-2.5 py-1 text-[11.5px] text-ink-soft">
-                  {c.supply}
-                </span>
-              </div>
-              <Reveal>
-                <h2 id={`${c.slug}-h`} className="mt-5 max-w-[16ch] text-[clamp(30px,3.4vw,50px)] leading-[1.02] font-medium tracking-[-0.04em]">
-                  {c.name}
-                </h2>
-              </Reveal>
-              <p className="mt-5 max-w-[52ch] text-[17px] leading-relaxed text-ink">{c.summary}</p>
-              <div className="mt-5 max-w-[60ch] space-y-3 text-[15px] leading-relaxed text-ink-soft">
+        {/* Content */}
+        <div className={`flex flex-col gap-12 px-[var(--gutter)] py-14 lg:px-16 lg:py-24 ${flip ? 'lg:order-1' : ''}`}>
+          <div>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="label text-copper">Category {c.index}</p>
+              <span className="rounded-[var(--radius-chip)] border border-dashed border-ink/25 px-2.5 py-1 text-[12px] text-ink-soft">{c.supply}</span>
+            </div>
+            <MaskLines id={`${c.slug}-h`} className="t-h2 mt-6 max-w-[14ch]" lines={[c.name]} />
+            <Reveal>
+              <p className="t-lead mt-6 max-w-[48ch] text-ink">{c.summary}</p>
+              <div className="mt-5 max-w-[60ch] space-y-3 text-[15.5px] leading-relaxed text-ink-soft">
                 {c.body.map((p) => (
-                  <p key={p.slice(0, 20)}>{p}</p>
+                  <p key={p.slice(0, 24)}>{p}</p>
                 ))}
               </div>
-            </div>
+            </Reveal>
+          </div>
 
-            <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-10 sm:grid-cols-2">
+            <div>
+              <p className="label text-ink-soft">Typical applications</p>
+              <Stagger as="ul" gap={0.05} className="mt-3 border-t border-ink/12">
+                {c.applications.map((a) => (
+                  <Item as="li" key={a} className="flex items-start gap-2.5 border-b border-ink/12 py-3 text-[14.5px]">
+                    <Check className="mt-0.5 size-4 shrink-0 text-teal" strokeWidth={1.8} aria-hidden />
+                    {a}
+                  </Item>
+                ))}
+              </Stagger>
+            </div>
+            <div className="flex flex-col gap-6">
               <div>
-                <p className="label text-ink-soft">Typical applications</p>
-                <ul className="mt-3 border-t border-ink/12">
-                  {c.applications.map((a) => (
-                    <li key={a} className="flex items-start gap-2.5 border-b border-ink/12 py-2.5 text-[14px]">
-                      <Check className="mt-0.5 size-4 shrink-0 text-teal" strokeWidth={1.8} aria-hidden />
-                      {a}
+                <p className="label text-ink-soft">Used by</p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {c.usedBy.map((u) => (
+                    <li key={u} className="rounded-[var(--radius-chip)] bg-stone px-2.5 py-1.5 text-[13px] text-ink">
+                      {u}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="flex flex-col justify-between gap-6">
-                <div>
-                  <p className="label text-ink-soft">Used by</p>
-                  <ul className="mt-3 flex flex-wrap gap-1.5">
-                    {c.usedBy.map((u) => (
-                      <li key={u} className="rounded-[var(--radius-chip)] bg-paper px-2.5 py-1.5 text-[12.5px] text-ink">
-                        {u}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-[4px] border border-dashed border-ink/20 p-4">
-                  <p className="label text-ink-soft">Product range</p>
-                  <p className="mt-2 text-[13px] leading-relaxed text-ink-mute">
-                    [Product names, grades and technical data sheets for this category to be added.]
-                  </p>
-                </div>
+              <div className="rounded-[3px] border border-dashed border-ink/20 p-4">
+                <p className="label text-ink-soft">Product range</p>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-mute">
+                  [Product names, grades and technical data sheets for this category to be added.]
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="flex flex-col gap-[3px] sm:flex-row">
-              <Button to={`/contact?requirement=${c.slug}`}>Enquire about this range</Button>
-              <Link
-                to="/contact"
-                className="group inline-flex h-12 items-center gap-2 px-4 text-[14px] font-medium text-forest"
-              >
-                <span className="link-underline">Request a technical discussion</span>
-                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.6} />
-              </Link>
-            </div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <Button to={`/contact?requirement=${c.slug}`}>Enquire about this range</Button>
+            <Link to="/contact" className="group inline-flex min-h-12 items-center gap-2 px-4 text-[14px] font-medium text-forest">
+              <span className="link-underline">Request a technical discussion</span>
+              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.6} />
+            </Link>
           </div>
         </div>
       </div>

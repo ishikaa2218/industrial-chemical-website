@@ -125,6 +125,10 @@ export const categories: Category[] = [
 export type Industry = {
   name: string
   line: string
+  /** a little more context, shown when the industry is opened */
+  detail: string
+  /** product category slugs most relevant to this industry */
+  categories: string[]
   photo: PhotoKey
 }
 
@@ -132,31 +136,49 @@ export const industries: Industry[] = [
   {
     name: 'Automobile Manufacturing',
     line: 'Chemicals that support the processing of parts destined for vehicle production lines.',
+    detail:
+      'Vehicle programmes run for years, and the parts feeding them must be processed the same way throughout. We support the hardening, heat treatment and cleaning stages behind those parts.',
+    categories: ['automotive', 'specialty-chemicals'],
     photo: 'autoRobots',
   },
   {
     name: 'Automotive Components',
     line: 'Hardening, heat treatment and preparation chemistry for gears, shafts, pins and fasteners.',
+    detail:
+      'Gears, shafts, pins and fasteners are hardened, heat treated and prepared before assembly. We supply chemicals for each of these stages to component makers and their heat treatment partners.',
+    categories: ['automotive', 'steel-hardening', 'heat-treatment'],
     photo: 'machinedParts',
   },
   {
     name: 'Steel Processing',
     line: 'Supply for steel processors where surface quality and hardness consistency matter.',
+    detail:
+      'Steel processors depend on predictable surface quality and hardness. We supply hardening and process chemicals with an emphasis on consistency and planned availability.',
+    categories: ['steel-hardening', 'process-chemicals'],
     photo: 'steelCoils',
   },
   {
     name: 'Metalworking',
     line: 'Cleaning, protection and process chemicals for machining and fabrication units.',
+    detail:
+      'Machining and fabrication units need parts cleaned, protected and prepared between operations. Our specialty and process chemicals are selected for those in-between stages.',
+    categories: ['specialty-chemicals', 'process-chemicals'],
     photo: 'grinding',
   },
   {
     name: 'Industrial Engineering',
     line: 'Process chemicals for engineering workshops and equipment manufacturers.',
+    detail:
+      'Engineering workshops and equipment manufacturers use a broad mix of process chemicals. We help consolidate that supply and match products to each application.',
+    categories: ['process-chemicals', 'specialty-chemicals'],
     photo: 'cncWorkshop',
   },
   {
     name: 'Heat Treatment',
     line: 'Chemicals for commercial heat treaters and captive furnace operations.',
+    detail:
+      'Commercial heat treaters and captive furnace operations need chemistry that keeps cycles repeatable. We supply chemicals used around the furnace — from salt baths to quenching.',
+    categories: ['heat-treatment', 'steel-hardening'],
     photo: 'furnaceRod',
   },
 ]

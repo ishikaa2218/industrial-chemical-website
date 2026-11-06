@@ -5,6 +5,7 @@ import { AlertCircle, Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-r
 import { Button } from '../components/common/Button'
 import { Label } from '../components/common/Label'
 import { Seo } from '../components/common/Seo'
+import { MaskLines } from '../components/motion'
 import { categories } from '../data/content'
 import { site } from '../data/site'
 
@@ -75,17 +76,22 @@ export default function Contact() {
         path="/contact"
       />
 
-      <section className="shell">
-        <div className="grid gap-2.5 lg:grid-cols-12">
+      <section className="w-full bg-paper">
+        <div className="grid lg:grid-cols-12">
           {/* Left: introduction + details */}
-          <div className="panel flex flex-col justify-between gap-12 px-4 pt-8 pb-6 sm:px-8 sm:pt-10 lg:col-span-5 lg:px-10 lg:pt-12 lg:pb-10">
+          <div className="flex flex-col justify-between gap-14 px-[var(--gutter)] pt-14 pb-12 lg:col-span-5 lg:pt-24 lg:pr-14 lg:pb-16">
             <div>
               <p className="label flex gap-3 text-ink-soft">
                 <span className="text-copper">04</span> Contact us
               </p>
-              <h1 className="mt-6 text-[clamp(38px,4.6vw,72px)] leading-[0.98] font-medium tracking-[-0.045em]">
-                Let’s discuss your <span className="text-forest">chemical requirement</span>
-              </h1>
+              <MaskLines
+                as="h1"
+                trigger="mount"
+                delay={0.1}
+                className="t-h1 mt-6"
+                lines={['Let’s discuss', 'your chemical', 'requirement']}
+                lineClassName={(i) => (i > 0 ? 'text-forest' : '')}
+              />
               <p className="mt-6 max-w-[42ch] text-[16px] leading-relaxed text-ink-soft">
                 Share your process, material and expected volumes. Our team will respond with product recommendations
                 and a quotation.
@@ -124,7 +130,7 @@ export default function Contact() {
           </div>
 
           {/* Right: form */}
-          <div className="panel bg-paper px-4 py-8 sm:px-8 lg:col-span-7 lg:px-10 lg:py-12">
+          <div className="border-t border-ink/10 bg-white px-[var(--gutter)] py-12 lg:col-span-7 lg:border-t-0 lg:border-l lg:px-16 lg:py-24">
             <AnimatePresence mode="wait" initial={false}>
               {!submitted ? (
                 <motion.form
@@ -243,12 +249,12 @@ export default function Contact() {
       </section>
 
       {/* Location */}
-      <section className="shell pt-2.5" aria-labelledby="map-h">
-        <div className="panel grid overflow-hidden lg:grid-cols-12">
-          <div className="flex flex-col justify-between gap-8 px-4 py-8 sm:px-8 lg:col-span-4 lg:px-10 lg:py-10">
+      <section className="w-full border-t border-ink/10 bg-white" aria-labelledby="map-h">
+        <div className="grid overflow-hidden lg:grid-cols-12">
+          <div className="flex flex-col justify-between gap-10 px-[var(--gutter)] py-14 lg:col-span-4 lg:py-20">
             <div>
               <Label>Location</Label>
-              <h2 id="map-h" className="mt-4 text-[28px] leading-tight font-medium tracking-[-0.03em]">
+              <h2 id="map-h" className="t-h3 mt-4">
                 Visit our office &amp; facility
               </h2>
             </div>
@@ -260,7 +266,7 @@ export default function Contact() {
               ))}
             </address>
           </div>
-          <div className="relative min-h-[320px] bg-stone lg:col-span-8 lg:min-h-[420px]">
+          <div className="relative min-h-[340px] bg-stone lg:col-span-8 lg:min-h-[520px]">
             {site.contact.mapEmbedUrl ? (
               <iframe
                 title="Company location on Google Maps"

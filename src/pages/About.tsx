@@ -1,7 +1,9 @@
-import { Label } from '../components/common/Label'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll } from 'framer-motion'
 import { Photo } from '../components/common/Photo'
-import { ImageReveal, Reveal } from '../components/common/Reveal'
 import { Seo } from '../components/common/Seo'
+import { Container, Section } from '../components/common/Section'
+import { ClipReveal, Item, MaskLines, Parallax, Reveal, ScrollWords, Stagger } from '../components/motion'
 import { CtaBand } from '../components/sections/CtaBand'
 import { PageHero } from '../components/sections/PageHero'
 import { industries } from '../data/content'
@@ -40,6 +42,21 @@ const quality = [
   { t: 'Follow up in use', d: 'We stay in touch after delivery to make sure results on the line are as expected.' },
 ]
 
+const business = [
+  {
+    label: '01',
+    title: 'Manufacturing',
+    body: 'We manufacture specialty chemicals for steel hardening, heat treatment and metal processing — the categories where process knowledge and consistency make the biggest difference to our customers.',
+    photo: 'chemicalPlant' as const,
+  },
+  {
+    label: '02',
+    title: 'Trading & distribution',
+    body: 'We source, stock and distribute industrial and process chemicals so that customers can consolidate purchasing with one dependable supplier and keep production on schedule.',
+    photo: 'drums' as const,
+  },
+]
+
 export default function About() {
   return (
     <>
@@ -52,12 +69,8 @@ export default function About() {
       <PageHero
         index="02"
         label="About us"
-        title={
-          <>
-            A manufacturing and trading partner for{' '}
-            <span className="text-forest">metal-processing industries</span>
-          </>
-        }
+        lines={['A manufacturing and', 'trading partner for', 'metal-processing industries']}
+        accentLine={2}
         intro={
           <p>
             We manufacture and trade industrial chemicals used where steel is hardened, heat treated and machined into
@@ -69,246 +82,220 @@ export default function About() {
       />
 
       {/* 1 — Company introduction */}
-      <section className="shell pt-2.5" aria-labelledby="intro-h">
-        <div className="panel px-4 py-10 sm:px-8 lg:px-10 lg:py-16">
-          <div className="grid grid-cols-12 gap-x-4 gap-y-10">
-            <div className="col-span-12 lg:col-span-3">
-              <Label>Who we are</Label>
-            </div>
-            <div className="col-span-12 lg:col-span-5">
-              <Reveal>
-                <h2 id="intro-h" className="text-[clamp(24px,2.6vw,36px)] leading-[1.2] font-medium tracking-[-0.03em]">
-                  Our work sits between the chemical industry and the shop floor of metal-processing plants.
-                </h2>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <div className="mt-6 space-y-4 text-[16px] leading-relaxed text-ink-soft">
-                  <p>
-                    Steel hardening, heat treatment and component manufacturing all depend on chemicals that perform
-                    predictably. A change in quality or a gap in supply shows up quickly as rejected parts or idle furnaces.
-                  </p>
-                  <p>
-                    We built our business around that reality — manufacturing the chemicals where process knowledge
-                    matters most, and trading the materials our customers need alongside them.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-            <Reveal delay={0.12} className="col-span-12 lg:col-span-4">
-              <div className="rounded-[4px] bg-paper p-5 sm:p-6">
-                <p className="label text-ink-soft">At a glance</p>
-                <dl className="mt-4">
-                  {atAGlance.map((r) => (
-                    <div key={r.k} className="grid grid-cols-[8.5rem_1fr] gap-3 border-t border-ink/10 py-3 text-[14px]">
-                      <dt className="text-ink-mute">{r.k}</dt>
-                      <dd className="text-ink">{r.v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
+      <Section tone="paper" labelledBy="intro-h">
+        <Container className="grid grid-cols-12 gap-x-6 gap-y-12 py-20 lg:py-32">
+          <p className="label col-span-12 text-ink-soft lg:col-span-3">Who we are</p>
+          <div className="col-span-12 lg:col-span-5">
+            <h2 id="intro-h" className="sr-only">
+              Who we are
+            </h2>
+            <ScrollWords
+              className="text-[clamp(26px,2.6vw,44px)] leading-[1.15] font-medium tracking-[-0.032em]"
+              text="Our work sits between the chemical industry and the shop floor of metal-processing plants."
+            />
+            <Reveal className="mt-8 space-y-4 text-[16px] leading-relaxed text-ink-soft">
+              <p>
+                Steel hardening, heat treatment and component manufacturing all depend on chemicals that perform
+                predictably. A change in quality or a gap in supply shows up quickly as rejected parts or idle furnaces.
+              </p>
+              <p>
+                We built our business around that reality — manufacturing the chemicals where process knowledge matters
+                most, and trading the materials our customers need alongside them.
+              </p>
             </Reveal>
           </div>
-        </div>
-      </section>
+          <Reveal delay={0.1} className="col-span-12 lg:col-span-3 lg:col-start-10">
+            <p className="label text-ink-soft">At a glance</p>
+            <dl className="mt-4 border-t border-ink/15">
+              {atAGlance.map((r) => (
+                <div key={r.k} className="border-b border-ink/15 py-3.5">
+                  <dt className="label text-ink-mute">{r.k}</dt>
+                  <dd className="mt-1 text-[15px] text-ink">{r.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        </Container>
+      </Section>
 
-      {/* 2 — Our business: split screen */}
-      <section className="shell pt-2.5" aria-labelledby="business-h">
+      {/* 2 — Our business: edge-to-edge split */}
+      <section aria-labelledby="business-h" className="w-full">
         <h2 id="business-h" className="sr-only">
           Our business
         </h2>
-        <div className="grid gap-2.5 lg:grid-cols-2">
-          {[
-            {
-              label: 'Our business · 01',
-              title: 'Manufacturing',
-              body: 'We manufacture specialty chemicals for steel hardening, heat treatment and metal processing — the categories where process knowledge and consistency make the biggest difference to our customers.',
-              photo: 'chemicalPlant' as const,
-            },
-            {
-              label: 'Our business · 02',
-              title: 'Trading & distribution',
-              body: 'We source, stock and distribute industrial and process chemicals so that customers can consolidate purchasing with one dependable supplier and keep production on schedule.',
-              photo: 'drums' as const,
-            },
-          ].map((b, i) => (
-            <article key={b.title} className="panel flex flex-col overflow-hidden">
-              <ImageReveal delay={i * 0.1}>
-                <Photo k={b.photo} ratio={3 / 2} sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[3/2] w-full" />
-              </ImageReveal>
-              <div className="flex flex-1 flex-col gap-8 px-4 py-7 sm:px-8 lg:px-10 lg:py-9">
-                <p className="label text-copper">{b.label}</p>
-                <div>
-                  <h3 className="text-[clamp(28px,3vw,44px)] leading-none font-medium tracking-[-0.04em]">{b.title}</h3>
-                  <p className="mt-4 max-w-[48ch] text-[15px] leading-relaxed text-ink-soft">{b.body}</p>
-                </div>
+        <div className="grid border-t border-ink/12 lg:grid-cols-2">
+          {business.map((b, i) => (
+            <article key={b.title} className={`group flex flex-col bg-white ${i === 1 ? 'lg:border-l lg:border-ink/12' : ''}`}>
+              <ClipReveal from={i === 0 ? 'right' : 'left'} className="relative aspect-[16/11] w-full">
+                <Photo k={b.photo} tint zoom sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0" />
+              </ClipReveal>
+              <div className="flex flex-1 flex-col gap-6 px-[var(--gutter)] py-10 lg:px-14 lg:py-14">
+                <p className="label text-copper">Our business · {b.label}</p>
+                <h3 className="t-h2 transition-colors duration-300 group-hover:text-forest">{b.title}</h3>
+                <p className="max-w-[50ch] text-[16px] leading-relaxed text-ink-soft">{b.body}</p>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      {/* 3 — Manufacturing capabilities: asymmetric images + numbered list */}
-      <section className="shell pt-2.5" aria-labelledby="cap-h">
-        <div className="panel bg-paper px-4 py-10 sm:px-8 lg:px-10 lg:py-16">
-          <div className="grid grid-cols-12 gap-x-4 gap-y-12">
-            <div className="col-span-12 lg:col-span-5">
-              <Label>Manufacturing capabilities</Label>
-              <Reveal>
-                <h2 id="cap-h" className="mt-5 max-w-[15ch] text-[clamp(30px,3.6vw,52px)] leading-[1.02] font-medium tracking-[-0.04em]">
-                  Produced with the end process in mind
-                </h2>
-              </Reveal>
-              <div className="relative mt-10 hidden h-[460px] sm:block">
-                <ImageReveal className="absolute top-0 left-0 w-[62%]">
-                  <Photo k="labBeaker" ratio={3 / 4} sizes="28vw" className="aspect-[3/4] w-full rounded-[3px]" />
-                </ImageReveal>
-                <ImageReveal delay={0.2} className="absolute right-0 bottom-0 w-[48%]">
-                  <Photo k="furnaceRod" ratio={1} sizes="22vw" className="aspect-square w-full rounded-[3px] ring-[6px] ring-paper" />
-                </ImageReveal>
-              </div>
-            </div>
-            <div className="col-span-12 lg:col-span-6 lg:col-start-7 lg:pt-24">
-              <ol className="border-t border-ink/15">
-                {capabilities.map((c, i) => (
-                  <Reveal key={c.t} delay={i * 0.05} className="grid grid-cols-[3rem_1fr] gap-x-4 border-b border-ink/15 py-7">
-                    <span className="label pt-1 text-copper">0{i + 1}</span>
-                    <div>
-                      <h3 className="text-[21px] leading-tight font-medium tracking-[-0.025em]">{c.t}</h3>
-                      <p className="mt-2.5 text-[15px] leading-relaxed text-ink-soft">{c.d}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </ol>
-              <p className="label mt-6 text-ink-mute">[Add facility details — plant area, capacity, equipment]</p>
+      {/* 3 — Manufacturing capabilities: layered images at different depths */}
+      <Section tone="paper" labelledBy="cap-h" divider>
+        <Container className="grid grid-cols-12 gap-x-6 gap-y-14 py-20 lg:py-32">
+          <div className="col-span-12 lg:col-span-6">
+            <p className="label text-ink-soft">Manufacturing capabilities</p>
+            <MaskLines id="cap-h" className="t-h2 mt-6 max-w-[14ch]" lines={['Produced with the', 'end process in mind']} />
+            <div className="relative mt-14 hidden h-[560px] sm:block">
+              <ClipReveal from="up" className="group absolute top-0 left-0 w-[60%] rounded-[3px]">
+                <Photo k="labBeaker" ratio={3 / 4} tint zoom sizes="30vw" className="aspect-[3/4] w-full" />
+              </ClipReveal>
+              <Parallax distance={70} className="absolute right-[4%] bottom-0 w-[46%]">
+                <ClipReveal from="left" delay={0.15} className="group rounded-[3px] ring-8 ring-paper">
+                  <Photo k="furnaceRod" ratio={1} tint zoom sizes="22vw" className="aspect-square w-full" />
+                </ClipReveal>
+              </Parallax>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 4 — Trading & distribution: occasional dark section */}
-      <section className="shell pt-2.5" aria-labelledby="trade-h">
-        <div className="panel grid overflow-hidden bg-forest text-paper lg:grid-cols-12">
-          <div className="flex flex-col justify-between gap-12 px-4 py-10 sm:px-8 lg:col-span-6 lg:px-10 lg:py-14">
-            <Label tone="light">Chemical trading &amp; distribution</Label>
-            <div>
-              <Reveal>
-                <h2 id="trade-h" className="max-w-[16ch] text-[clamp(30px,3.6vw,52px)] leading-[1.02] font-medium tracking-[-0.04em] text-paper">
-                  One dependable source for the chemicals your plant runs on
-                </h2>
-              </Reveal>
-              <p className="mt-6 max-w-[48ch] text-[15px] leading-relaxed text-paper/75">
-                Alongside our own manufactured range, we trade and distribute industrial chemicals from established
-                sources. Customers benefit from consolidated purchasing, planned deliveries and a single point of
-                contact for technical and commercial questions.
-              </p>
-            </div>
-            <ul className="grid grid-cols-1 border-t border-paper/20 sm:grid-cols-3">
-              {['Sourcing', 'Stocking', 'Planned delivery'].map((t, i) => (
-                <li key={t} className={`py-4 text-[14px] ${i > 0 ? 'border-t border-paper/20 sm:border-t-0 sm:border-l sm:pl-4' : ''}`}>
-                  <span className="label mr-2 text-copper">0{i + 1}</span>
-                  {t}
-                </li>
+          <div className="col-span-12 lg:col-span-5 lg:col-start-8 lg:pt-40">
+            <Stagger as="ol" className="border-t border-ink/15">
+              {capabilities.map((c, i) => (
+                <Item as="li" key={c.t} className="grid grid-cols-[3rem_1fr] gap-x-4 border-b border-ink/15 py-8">
+                  <span className="label pt-1.5 text-copper">0{i + 1}</span>
+                  <div>
+                    <h3 className="t-h3">{c.t}</h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{c.d}</p>
+                  </div>
+                </Item>
               ))}
-            </ul>
+            </Stagger>
+            <p className="label mt-6 text-ink-mute">[Add facility details — plant area, capacity, equipment]</p>
           </div>
-          <div className="relative min-h-[320px] lg:col-span-6">
-            <Photo k="pipes" sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full" />
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* 5 — Industrial expertise: editorial table */}
-      <section className="shell pt-2.5" aria-labelledby="exp-h">
-        <div className="panel px-4 py-10 sm:px-8 lg:px-10 lg:py-16">
-          <div className="grid grid-cols-12 gap-x-4 gap-y-8">
-            <div className="col-span-12 lg:col-span-3">
-              <Label>Industrial expertise</Label>
-            </div>
-            <div className="col-span-12 lg:col-span-9">
-              <Reveal>
-                <h2 id="exp-h" className="max-w-[24ch] text-[clamp(28px,3.2vw,46px)] leading-[1.05] font-medium tracking-[-0.04em]">
-                  We know the industries we supply — and the processes inside them
-                </h2>
-              </Reveal>
-              <table className="mt-10 w-full border-t border-ink/15 text-left">
-                <caption className="sr-only">Industries and how we support them</caption>
-                <thead className="sr-only">
-                  <tr>
-                    <th scope="col">Industry</th>
-                    <th scope="col">How we support it</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {industries.map((ind, i) => (
-                    <tr key={ind.name} className="border-b border-ink/15 align-top">
-                      <th scope="row" className="w-[42%] py-5 pr-4 text-[17px] font-medium tracking-[-0.02em] sm:text-[20px]">
-                        <span className="label mr-3 align-middle text-copper">0{i + 1}</span>
-                        {ind.name}
-                      </th>
-                      <td className="py-5 text-[14px] leading-relaxed text-ink-soft sm:text-[15px]">{ind.line}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6 — Quality approach: horizontal process line */}
-      <section className="shell pt-2.5" aria-labelledby="quality-h">
-        <div className="panel bg-paper px-4 py-10 sm:px-8 lg:px-10 lg:py-16">
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div>
-              <Label>Quality approach</Label>
-              <Reveal>
-                <h2 id="quality-h" className="mt-5 max-w-[18ch] text-[clamp(30px,3.6vw,52px)] leading-[1.02] font-medium tracking-[-0.04em]">
-                  Quality is a process, not a promise
-                </h2>
-              </Reveal>
-            </div>
-            <p className="max-w-[42ch] text-[15px] leading-relaxed text-ink-soft">
-              Every enquiry follows the same four steps, from the first conversation to results on the customer’s line.
-            </p>
-          </div>
-          <ol className="mt-12 grid gap-y-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
-            {quality.map((q, i) => (
-              <Reveal key={q.t} delay={i * 0.08} className="relative pr-6">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-forest font-mono text-[12px] text-forest">
-                    {i + 1}
-                  </span>
-                  <span aria-hidden className="h-px flex-1 bg-ink/20" />
-                </div>
-                <h3 className="mt-5 text-[19px] leading-tight font-medium tracking-[-0.02em]">{q.t}</h3>
-                <p className="mt-2.5 text-[14px] leading-relaxed text-ink-soft">{q.d}</p>
-              </Reveal>
-            ))}
-          </ol>
-          <p className="label mt-10 text-ink-mute">[Add quality certifications here only once confirmed by the company]</p>
-        </div>
-      </section>
-
-      {/* 7 — Customer commitment */}
-      <section className="shell pt-2.5" aria-labelledby="commit-h">
-        <div className="panel px-4 py-14 sm:px-8 lg:px-10 lg:py-24">
-          <div className="grid grid-cols-12 gap-x-4 gap-y-8">
-            <div className="col-span-12 lg:col-span-3">
-              <Label>Customer commitment</Label>
-            </div>
-            <Reveal className="col-span-12 lg:col-span-8">
-              <h2 id="commit-h" className="text-[clamp(26px,3.4vw,50px)] leading-[1.12] font-medium tracking-[-0.035em]">
-                <span className="text-copper">“</span>We measure ourselves by the orders our customers place a second,
-                third and tenth time. Consistent material, honest advice and supply that arrives when it is needed — that
-                is the commitment behind every consignment.<span className="text-copper">”</span>
-              </h2>
-              <p className="label mt-8 text-ink-soft">— [Name], [Designation]</p>
+      {/* 4 — Trading & distribution: selected dark section, full bleed */}
+      <section aria-labelledby="trade-h" className="grid w-full bg-forest text-paper lg:grid-cols-2">
+        <div className="flex flex-col justify-between gap-14 px-[var(--gutter)] py-16 lg:py-24 lg:pr-16">
+          <p className="label text-paper/60">Chemical trading &amp; distribution</p>
+          <div>
+            <MaskLines
+              id="trade-h"
+              className="t-h2 max-w-[15ch] text-paper"
+              lines={['One dependable source', 'for the chemicals', 'your plant runs on']}
+            />
+            <Reveal>
+              <p className="mt-8 max-w-[50ch] text-[16px] leading-relaxed text-paper/75">
+                Alongside our own manufactured range, we trade and distribute industrial chemicals from established
+                sources. Customers benefit from consolidated purchasing, planned deliveries and a single point of contact
+                for technical and commercial questions.
+              </p>
             </Reveal>
           </div>
+          <Stagger as="ul" className="grid grid-cols-1 border-t border-paper/20 sm:grid-cols-3">
+            {['Sourcing', 'Stocking', 'Planned delivery'].map((t, i) => (
+              <Item as="li" key={t} className={`py-5 text-[15px] ${i > 0 ? 'border-t border-paper/20 sm:border-t-0 sm:border-l sm:pl-5' : ''}`}>
+                <span className="label mr-2 text-copper">0{i + 1}</span>
+                {t}
+              </Item>
+            ))}
+          </Stagger>
         </div>
+        <ClipReveal from="left" className="group relative min-h-[360px]">
+          <Photo k="pipes" zoom sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0" />
+        </ClipReveal>
       </section>
+
+      {/* 5 — Industrial expertise: full-width editorial index */}
+      <Section tone="white" labelledBy="exp-h">
+        <Container className="grid grid-cols-12 gap-x-6 gap-y-10 py-20 lg:py-32">
+          <p className="label col-span-12 text-ink-soft lg:col-span-3">Industrial expertise</p>
+          <div className="col-span-12 lg:col-span-9">
+            <MaskLines id="exp-h" className="t-h2 max-w-[22ch]" lines={['We know the industries we supply', '— and the processes inside them']} />
+          </div>
+        </Container>
+        <ul className="border-t border-ink/12">
+          {industries.map((ind, i) => (
+            <li key={ind.name} className="group border-b border-ink/12 transition-colors duration-300 hover:bg-paper">
+              <div className="container-wide grid grid-cols-12 items-center gap-x-6 gap-y-2 py-6 lg:py-7">
+                <span className="label col-span-2 text-copper sm:col-span-1">0{i + 1}</span>
+                <h3 className="col-span-10 text-[clamp(20px,2vw,32px)] leading-tight font-medium tracking-[-0.03em] transition-transform duration-300 ease-out group-hover:translate-x-2 sm:col-span-5 lg:col-span-4">
+                  {ind.name}
+                </h3>
+                <p className="col-span-12 text-[15px] leading-relaxed text-ink-soft sm:col-span-6 lg:col-span-5">{ind.line}</p>
+                <Photo
+                  k={ind.photo}
+                  ratio={16 / 10}
+                  tint
+                  sizes="160px"
+                  className="hidden aspect-[16/10] w-full rounded-[2px] lg:col-span-2 lg:col-start-11 lg:block"
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 6 — Quality approach: process line draws as the section is read */}
+      <QualitySteps />
+
+      {/* 7 — Customer commitment */}
+      <Section tone="white" labelledBy="commit-h" divider>
+        <Container className="grid grid-cols-12 gap-x-6 gap-y-10 py-24 lg:py-40">
+          <p className="label col-span-12 text-ink-soft lg:col-span-3">Customer commitment</p>
+          <div className="col-span-12 lg:col-span-9">
+            <h2 id="commit-h" className="sr-only">
+              Customer commitment
+            </h2>
+            <ScrollWords
+              as="p"
+              className="text-[clamp(28px,3.6vw,62px)] leading-[1.08] font-medium tracking-[-0.038em]"
+              text="“We measure ourselves by the orders our customers place a second, third and tenth time. Consistent material, honest advice and supply that arrives when it is needed — that is the commitment behind every consignment.”"
+            />
+            <p className="label mt-10 text-ink-soft">— [Name], [Designation]</p>
+          </div>
+        </Container>
+      </Section>
 
       <CtaBand photo="grinding" />
     </>
+  )
+}
+
+function QualitySteps() {
+  const ref = useRef<HTMLOListElement>(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 85%', 'start 35%'] })
+  return (
+    <Section tone="paper" labelledBy="quality-h" divider>
+      <Container className="py-20 lg:py-32">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <div>
+            <p className="label text-ink-soft">Quality approach</p>
+            <MaskLines id="quality-h" className="t-h2 mt-6 max-w-[16ch]" lines={['Quality is a process,', 'not a promise']} />
+          </div>
+          <p className="max-w-[40ch] text-[16px] leading-relaxed text-ink-soft">
+            Every enquiry follows the same four steps, from the first conversation to results on the customer’s line.
+          </p>
+        </div>
+        <ol ref={ref} className="relative mt-16 grid gap-y-10 sm:grid-cols-2 lg:mt-24 lg:grid-cols-4">
+          <span aria-hidden className="absolute top-[18px] right-0 left-0 hidden h-px bg-ink/15 lg:block" />
+          <motion.span
+            aria-hidden
+            style={{ scaleX: reduce ? 1 : scrollYProgress }}
+            className="absolute top-[18px] right-0 left-0 hidden h-px origin-left bg-forest lg:block"
+          />
+          {quality.map((q, i) => (
+            <li key={q.t} className="relative pr-8">
+              <span className="relative z-10 grid size-9 place-items-center rounded-full border border-forest bg-paper font-mono text-[12px] text-forest">
+                {i + 1}
+              </span>
+              <h3 className="t-h3 mt-6">{q.t}</h3>
+              <p className="mt-3 max-w-[34ch] text-[15px] leading-relaxed text-ink-soft">{q.d}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="label mt-14 text-ink-mute">[Add quality certifications here only once confirmed by the company]</p>
+      </Container>
+    </Section>
   )
 }

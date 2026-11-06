@@ -4,9 +4,9 @@ import { Seo } from '../components/common/Seo'
 
 export default function NotFound() {
   return (
-    <section className="shell">
+    <section className="w-full bg-paper">
       <Seo title="Page not found" description="The page you are looking for could not be found." path="/404" />
-      <div className="panel flex min-h-[70svh] flex-col justify-between px-5 py-10 sm:px-8 lg:px-10">
+      <div className="container-wide flex min-h-[70svh] flex-col justify-between py-16">
         <Label>Error 404</Label>
         <div>
           <h1 className="display text-[clamp(48px,9vw,140px)]">Page not found</h1>

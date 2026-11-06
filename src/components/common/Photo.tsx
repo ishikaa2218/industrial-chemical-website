@@ -9,6 +9,10 @@ type Props = {
   imgClassName?: string
   priority?: boolean
   alt?: string
+  /** monochrome until hovered / focused / selected (parent needs .group or .is-active) */
+  tint?: boolean
+  /** gentle zoom on hover (parent needs .group) */
+  zoom?: boolean
 }
 
 /** Responsive, lazy-loaded photo served from the Unsplash image CDN. */
@@ -20,13 +24,16 @@ export function Photo({
   imgClassName = '',
   priority = false,
   alt,
+  tint = false,
+  zoom = false,
 }: Props) {
   const p = photos[k] as { id: string; alt: string; focus?: string }
+  const positioned = /\b(absolute|fixed|sticky)\b/.test(className)
   return (
-    <div className={`${/\b(absolute|fixed|sticky)\b/.test(className) ? '' : 'relative '}overflow-hidden bg-stone-2 ${className}`}>
+    <div className={`${positioned ? '' : 'relative '}overflow-hidden bg-stone-2 ${className}`}>
       <img
         src={photoUrl(p.id, 1080, ratio)}
-        srcSet={photoSrcSet(p.id, ratio)}
+        srcSet={photoSrcSet(p.id, ratio, [480, 768, 1080, 1440, 1920, 2560])}
         sizes={sizes}
         alt={alt ?? p.alt}
         width={1080}
@@ -35,7 +42,7 @@ export function Photo({
         decoding="async"
         fetchPriority={priority ? 'high' : 'auto'}
         style={{ objectPosition: p.focus ?? '50% 50%' }}
-        className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
+        className={`absolute inset-0 h-full w-full object-cover ${tint ? 'photo-tint' : ''} ${zoom ? 'photo-zoom' : ''} ${imgClassName}`}
       />
     </div>
   )

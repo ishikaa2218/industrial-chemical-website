@@ -1,10 +1,10 @@
 import { Seo } from '../components/common/Seo'
 import { CtaBand } from '../components/sections/CtaBand'
-import { CategorySlider } from '../components/sections/home/CategorySlider'
 import { Hero } from '../components/sections/home/Hero'
 import { Industries } from '../components/sections/home/Industries'
 import { Intro } from '../components/sections/home/Intro'
 import { ProcessBand } from '../components/sections/home/ProcessBand'
+import { ProductNavigator } from '../components/sections/home/ProductNavigator'
 import { WhyUs } from '../components/sections/home/WhyUs'
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
       />
       <Hero />
       <Intro />
-      <CategorySlider />
+      <ProductNavigator />
       <Industries />
       <ProcessBand />
       <WhyUs />

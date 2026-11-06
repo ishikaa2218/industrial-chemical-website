@@ -12,7 +12,7 @@ export function WhyUs() {
       <Container className="grid grid-cols-12 gap-x-6 gap-y-14 py-20 lg:py-32">
         {/* Sticky editorial column with layered photography */}
         <div className="col-span-12 lg:col-span-5">
-          <div className="lg:sticky lg:top-[calc(var(--header-h)+40px)]">
+          <div className="lg:sticky lg:top-[calc(var(--header-current)+40px)]">
             <p className="label text-ink-soft">
               <span className="text-copper">05</span> · Why work with us
             </p>

@@ -78,7 +78,7 @@ export default function Products() {
       <Explorer />
 
       {/* Sticky category navigation — full width */}
-      <nav aria-label="Product categories" className="sticky top-[var(--header-h)] z-40 w-full border-y border-ink/10 bg-paper/92 backdrop-blur-md">
+      <nav aria-label="Product categories" className="sticky top-[var(--header-current)] z-40 transition-[top] duration-300 ease-out w-full border-y border-ink/10 bg-paper/92 backdrop-blur-md">
         <ul ref={railRef} className="container-wide no-scrollbar relative flex gap-1 overflow-x-auto py-2">
           {sections.map((s, i) => (
             <li key={s.id} className="shrink-0 lg:flex-1">
@@ -278,7 +278,7 @@ function CategorySection({ c, flip }: { c: Category; flip: boolean }) {
       <div className="grid lg:grid-cols-2">
         {/* Photograph — bleeds to its viewport edge and stays in view while the copy scrolls */}
         <div className={`relative ${flip ? 'lg:order-2' : ''}`}>
-          <div className="lg:sticky lg:top-[calc(var(--header-h)+60px)] lg:h-[calc(100svh-var(--header-h)-60px)]">
+          <div className="lg:sticky lg:top-[calc(var(--header-current)+60px)] lg:h-[calc(100svh-var(--header-current)-60px)]">
             <ClipReveal from={flip ? 'left' : 'right'} className="group relative aspect-[4/3] h-full w-full lg:aspect-auto">
               <Photo k={c.photo} zoom sizes="(min-width:1024px) 50vw, 100vw" className="absolute inset-0" />
               <span className="label absolute top-4 left-4 rounded-[2px] bg-white/90 px-2 py-1 text-ink">{c.index} / 05</span>

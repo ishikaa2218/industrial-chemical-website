@@ -59,7 +59,7 @@ export function Header() {
             </span>
             <span className="leading-none">
               <span className="block text-[16px] font-semibold tracking-[-0.02em] whitespace-nowrap">{site.name}</span>
-              <span className={`label mt-1 hidden text-[9.5px] sm:block ${overHero ? 'text-paper/65' : 'text-ink-mute'}`}>
+              <span className={`label mt-1 hidden text-[9.5px] whitespace-nowrap sm:block lg:hidden xl:block ${overHero ? 'text-paper/65' : 'text-ink-mute'}`}>
                 {site.descriptor} · {site.tagline}
               </span>
             </span>
@@ -72,11 +72,11 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
-                className="group relative flex items-baseline gap-1.5 px-3.5 py-2 text-[13.5px] font-medium"
+                className="group relative flex items-baseline gap-1.5 px-2.5 py-2 text-[13.5px] font-medium whitespace-nowrap xl:px-3.5"
               >
                 {({ isActive }) => (
                   <>
-                    <span className={`font-mono text-[10px] transition-colors duration-300 ${isActive ? 'text-copper' : 'opacity-45'}`}>
+                    <span className={`hidden font-mono text-[10px] transition-colors duration-300 xl:inline ${isActive ? 'text-copper' : 'opacity-45'}`}>
                       0{i + 1}
                     </span>
                     <span className={`transition-opacity duration-200 ${isActive ? '' : 'opacity-80 group-hover:opacity-100'}`}>
@@ -85,7 +85,7 @@ export function Header() {
                     {/* underline: grows on hover, stays for the active page */}
                     <span
                       aria-hidden
-                      className={`absolute inset-x-3.5 bottom-0.5 h-px origin-left bg-current transition-transform duration-300 ease-out ${
+                      className={`absolute inset-x-2.5 bottom-0.5 h-px xl:inset-x-3.5 origin-left bg-current transition-transform duration-300 ease-out ${
                         isActive ? 'scale-x-100 !bg-copper' : 'scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100'
                       }`}
                     />
@@ -97,7 +97,7 @@ export function Header() {
 
           <Link
             to="/contact"
-            className="group ml-auto hidden h-11 items-center gap-5 rounded-[var(--radius-chip)] bg-copper pr-3.5 pl-4.5 text-[13.5px] font-medium text-white transition-[background-color,transform] duration-200 hover:bg-[#a56b43] active:scale-[0.985] sm:flex lg:ml-2"
+            className="group ml-auto hidden h-11 shrink-0 items-center gap-5 rounded-[var(--radius-chip)] bg-copper pr-3.5 pl-4.5 text-[13.5px] font-medium whitespace-nowrap text-white transition-[background-color,transform] duration-200 hover:bg-[#a56b43] active:scale-[0.985] sm:flex lg:ml-2"
           >
             Get a Quote
             <ArrowUpRight

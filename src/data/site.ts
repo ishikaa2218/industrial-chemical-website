@@ -1,8 +1,7 @@
 /**
  * Company details for Geeta Paints and Chemicals (India), Ludhiana.
- * The email address, phone and WhatsApp numbers below are still
- * placeholders (example.com / zeros) — replace them with the company's
- * confirmed contact details before relying on them.
+ * Contact email and phone number are the company's confirmed details.
+ * The WhatsApp link uses the same number.
  */
 export const site = {
   name: 'Geeta Paints and Chemicals (India)',
@@ -14,10 +13,10 @@ export const site = {
   url: 'https://industrial-chemical-website.vercel.app',
 
   contact: {
-    email: 'enquiries@example.com',
-    phone: '+00 00000 00000',
-    phoneHref: '+0000000000',
-    whatsapp: '0000000000', // international format, digits only — e.g. 919800000000
+    email: 'marwaha1968@gmail.com',
+    phone: '+91 98150 83569',
+    phoneHref: '+919815083569',
+    whatsapp: '919815083569', // international format, digits only
     addressLines: ['Ludhiana', 'Punjab', 'India'],
     hours: 'Please call or email to arrange a visit',
     mapEmbedUrl: '', // paste a Google Maps "Embed a map" URL here to show the map

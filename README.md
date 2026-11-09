@@ -43,7 +43,7 @@ The site content describes **Geeta Paints and Chemicals (India)**, an establishe
 
 Still to confirm with the company before relying on them:
 
-- **`src/data/site.ts`** — email address, phone and WhatsApp number (currently placeholders), street address and Google Maps embed URL.
+- **`src/data/site.ts`** — street address and Google Maps embed URL (email and phone are confirmed: marwaha1968@gmail.com, +91 98150 83569).
 - **`src/data/content.ts`** — specific product names and grades for each application (the site deliberately describes applications rather than invented products).
 - **`src/components/common/Logo.tsx`** — temporary mark; replace with the company logo if one exists.
 - **Photography** (`src/data/images.ts`) — royalty-free Unsplash images of general industry; they do not show the company's own premises or products.

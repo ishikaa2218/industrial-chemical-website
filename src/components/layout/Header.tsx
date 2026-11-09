@@ -104,7 +104,7 @@ export function Header() {
             <LogoMark className={`size-[26px] shrink-0 2xl:size-[30px] transition-colors duration-300 ${overHero ? 'text-paper' : 'text-forest'}`} />
             <span aria-hidden className={`h-7 w-px transition-colors duration-300 ${overHero ? 'bg-paper/30' : 'bg-ink/15'}`} />
             <span className="flex flex-col leading-none">
-              <span className="text-[16.5px] font-semibold tracking-[-0.022em] whitespace-nowrap 2xl:text-[18px]">{site.name}</span>
+              <span className="text-[16.5px] font-semibold tracking-[-0.022em] whitespace-nowrap max-[479px]:max-w-[11rem] max-[479px]:whitespace-normal max-[479px]:leading-[1.1] 2xl:text-[18px]">{site.name}</span>
               <span
                 className={`mt-[5px] font-mono text-[9.5px] font-medium tracking-[0.14em] whitespace-nowrap uppercase transition-colors duration-300 ${
                   overHero ? 'text-paper/60' : 'text-ink-mute'

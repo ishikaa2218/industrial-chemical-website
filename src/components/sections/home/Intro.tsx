@@ -5,20 +5,20 @@ import { ClipReveal, Item, Parallax, ScrollWords, Stagger } from '../../motion'
 
 const pillars = [
   {
-    k: 'We manufacture',
-    v: 'Chemicals for steel hardening, heat treatment and metal processing, produced with attention to batch-to-batch consistency.',
+    k: 'Since the 1990s',
+    v: 'An established chemical business in Ludhiana, Punjab, with roots in the 1990s and long experience of the chemical trade.',
   },
   {
-    k: 'We trade & distribute',
-    v: 'Industrial and process chemicals sourced and supplied to keep customers’ plants running without interruption.',
+    k: 'Metal applications',
+    v: 'Chemicals associated with the hardening and heat treatment of iron and steel components, and with metal processing.',
   },
   {
-    k: 'We serve',
-    v: 'Steel processors, heat treatment shops, automotive component makers and engineering manufacturers.',
+    k: 'Industries we serve',
+    v: 'Automotive components, steel and metal processing, industrial engineering and textile dyeing.',
   },
   {
-    k: 'We work by',
-    v: 'Understanding the process first, then recommending the chemistry — and staying involved after supply.',
+    k: 'How we work',
+    v: 'Understanding the customer’s process first, then discussing which chemicals suit the application.',
   },
 ]
 
@@ -37,7 +37,7 @@ export function Intro() {
           </h2>
           <ScrollWords
             className="max-w-[26ch] text-[clamp(28px,3.6vw,64px)] leading-[1.06] font-medium tracking-[-0.038em] text-ink"
-            text="We manufacture and trade industrial chemicals for the processes that make steel stronger — hardening, heat treatment and the manufacture of automotive components."
+            text="Geeta Paints and Chemicals (India) is a Ludhiana-based chemical business serving metal hardening, heat treatment, automotive component manufacturing and textile dyeing."
           />
         </div>
 
@@ -56,8 +56,8 @@ export function Intro() {
 
           <div className="col-span-12 flex flex-col justify-end sm:col-span-5 lg:col-span-4 lg:col-start-8">
             <p className="t-lead text-ink-soft">
-              Our customers need chemicals that behave the same way, batch after batch, and a supplier who understands
-              why that matters on a hardening line. That is the standard we hold ourselves to.
+              Heat treatment results depend on the steel, the equipment and the process as much as on the chemistry. We
+              take time to understand each application before recommending chemicals for it.
             </p>
             <div className="mt-8">
               <Button to="/about" variant="outline">

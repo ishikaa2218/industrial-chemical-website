@@ -41,9 +41,9 @@ export function CategoryCarousel() {
       <div className="gutter flex items-end justify-between gap-4">
         <div>
           <h2 id="categories-title" className="label flex items-center gap-3 text-paper/60">
-            <span className="text-copper">02</span> Product categories
+            <span className="text-copper">02</span> Applications
           </h2>
-          <p className="t-h2 mt-4 max-w-[14ch] text-paper">Five ranges, one supplier</p>
+          <p className="t-h2 mt-4 max-w-[14ch] text-paper">Five application areas</p>
         </div>
         <p className="label shrink-0 text-paper/70" aria-live="polite">
           <span className="text-copper">{String(active + 1).padStart(2, '0')}</span> / {String(n).padStart(2, '0')}
@@ -53,7 +53,7 @@ export function CategoryCarousel() {
       <ol
         ref={track}
         className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-[var(--gutter)] px-[var(--gutter)]"
-        aria-label="Product categories"
+        aria-label="Applications"
       >
         {categories.map((c) => (
           <li key={c.slug} className="w-[82%] shrink-0 snap-start sm:w-[58%]">
@@ -64,7 +64,7 @@ export function CategoryCarousel() {
               <p className="mt-3 flex-1 text-[14.5px] leading-relaxed text-paper/75">{c.summary}</p>
               <div className="mt-5">
                 <Button to={`/products#${c.slug}`} variant="light" size="sm">
-                  View category
+                  View details
                 </Button>
               </div>
             </article>

@@ -9,50 +9,50 @@ import { PageHero } from '../components/sections/PageHero'
 import { industries } from '../data/content'
 
 const atAGlance = [
-  { k: 'Business', v: 'Manufacturing & trading of industrial chemicals' },
-  { k: 'Focus', v: 'Steel hardening, heat treatment, automotive' },
-  { k: 'Established', v: '[Year]' },
-  { k: 'Head office', v: '[City, State]' },
-  { k: 'Manufacturing unit', v: '[Location]' },
+  { k: 'Company', v: 'Geeta Paints and Chemicals (India)' },
+  { k: 'Based in', v: 'Ludhiana, Punjab, India' },
+  { k: 'Established', v: 'In the 1990s' },
+  { k: 'Focus', v: 'Metal hardening and heat treatment' },
+  { k: 'Industries', v: 'Automotive, metal processing, engineering, textile dyeing' },
 ]
 
 const capabilities = [
   {
-    t: 'Formulation & production',
-    d: 'In-house manufacture of chemicals for hardening, heat treatment and metal processing, produced to defined recipes for repeatable results.',
+    t: 'Understanding the application',
+    d: 'We begin with the material, the treatment and the result the customer needs, rather than with a product list.',
   },
   {
-    t: 'Process-matched selection',
-    d: 'Products are recommended against the customer’s material, equipment and process conditions — not picked from a list.',
+    t: 'Matching chemistry to the process',
+    d: 'Suggestions take into account the steel grade or fibre, the equipment in use and the operating conditions.',
   },
   {
-    t: 'Checks before dispatch',
-    d: 'Each batch is checked before it leaves the facility, so that what reaches the plant matches what was agreed.',
+    t: 'Guidance on handling and use',
+    d: 'Storage, handling and maintenance affect how chemicals perform and how safely they are used. We discuss these with customers.',
   },
   {
-    t: 'Packing for industrial handling',
-    d: 'Packed and labelled for safe storage and handling on the shop floor, in pack sizes that suit consumption.',
+    t: 'Continuing support',
+    d: 'Requirements change as products and processes change. We remain available to discuss them as they do.',
   },
 ]
 
 const quality = [
-  { t: 'Understand the requirement', d: 'Process, material, equipment and expected outcome — before any product is proposed.' },
-  { t: 'Match the chemistry', d: 'A product recommendation that fits the application, with clear guidance on use.' },
-  { t: 'Check before dispatch', d: 'Batch checks and correct documentation accompany every consignment.' },
-  { t: 'Follow up in use', d: 'We stay in touch after delivery to make sure results on the line are as expected.' },
+  { t: 'Understand the requirement', d: 'Process, material, equipment and expected outcome — discussed before any chemical is suggested.' },
+  { t: 'Discuss the options', d: 'Chemicals suited to the application, with information on how they should be used.' },
+  { t: 'Confirm and quote', d: 'Quantities, product details and terms agreed before supply.' },
+  { t: 'Stay in touch', d: 'Follow-up after supply, and a point of contact for future requirements.' },
 ]
 
 const business = [
   {
     label: '01',
-    title: 'Manufacturing',
-    body: 'We manufacture specialty chemicals for steel hardening, heat treatment and metal processing — the categories where process knowledge and consistency make the biggest difference to our customers.',
+    title: 'Metal hardening',
+    body: 'Our core application area: chemicals associated with the hardening and heat treatment of iron and steel components, used by heat treatment units and component manufacturers.',
     photo: 'chemicalPlant' as const,
   },
   {
     label: '02',
-    title: 'Trading & distribution',
-    body: 'We source, stock and distribute industrial and process chemicals so that customers can consolidate purchasing with one dependable supplier and keep production on schedule.',
+    title: 'Wider applications',
+    body: 'Beyond heat treatment, our work extends to related metal processing requirements and to textile dyeing — another industry with deep roots in Ludhiana.',
     photo: 'drums' as const,
   },
 ]
@@ -62,23 +62,23 @@ export default function About() {
     <>
       <Seo
         title="About Us"
-        description="A manufacturing and trading partner for steel hardening, heat treatment and automotive component industries — our business, capabilities and quality approach."
+        description="About Geeta Paints and Chemicals (India), an established chemical business in Ludhiana, Punjab, since the 1990s, serving metal hardening, heat treatment and textile dyeing applications."
         path="/about"
       />
 
       <PageHero
         index="02"
         label="About us"
-        lines={['A manufacturing and', 'trading partner for', 'metal-processing industries']}
+        lines={['An established', 'chemical business', 'in Ludhiana, Punjab']}
         accentLine={2}
         intro={
           <p>
-            We manufacture and trade industrial chemicals used where steel is hardened, heat treated and machined into
-            components. Our role is simple: supply the right chemistry, consistently, to the plants that depend on it.
+            Geeta Paints and Chemicals (India) is a chemical business based in Ludhiana, Punjab, with roots dating back
+            to the 1990s — serving metal hardening, heat treatment and manufacturing applications, and textile dyeing.
           </p>
         }
         photo="steelPlant"
-        photoCaption="Steel processing — one of the core industries we serve"
+        photoCaption="Steel processing — one of the industries we serve"
       />
 
       {/* 1 — Company introduction */}
@@ -91,16 +91,16 @@ export default function About() {
             </h2>
             <ScrollWords
               className="text-[clamp(26px,2.6vw,44px)] leading-[1.15] font-medium tracking-[-0.032em]"
-              text="Our work sits between the chemical industry and the shop floor of metal-processing plants."
+              text="Our business sits between the chemical trade and the industrial units that depend on it."
             />
             <Reveal className="mt-8 space-y-4 text-[16px] leading-relaxed text-ink-soft">
               <p>
-                Steel hardening, heat treatment and component manufacturing all depend on chemicals that perform
-                predictably. A change in quality or a gap in supply shows up quickly as rejected parts or idle furnaces.
+                Over the years, the business has maintained its presence in the chemical sector, serving industrial needs
+                associated with metal processing — particularly the hardening and heat treatment of iron and steel parts.
               </p>
               <p>
-                We built our business around that reality — manufacturing the chemicals where process knowledge matters
-                most, and trading the materials our customers need alongside them.
+                Ludhiana’s industry spans engineering, auto parts and textiles. Our focus is on understanding each
+                customer’s process and helping them identify suitable chemical solutions for their application.
               </p>
             </Reveal>
           </div>
@@ -139,12 +139,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* 3 — Manufacturing capabilities: layered images at different depths */}
+      {/* 3 — Our approach: layered images at different depths */}
       <Section tone="paper" labelledBy="cap-h" divider>
         <Container className="grid grid-cols-12 gap-x-6 gap-y-14 py-20 lg:py-32">
           <div className="col-span-12 lg:col-span-6">
-            <p className="label text-ink-soft">Manufacturing capabilities</p>
-            <MaskLines id="cap-h" className="t-h2 mt-6 max-w-[14ch]" lines={['Produced with the', 'end process in mind']} />
+            <p className="label text-ink-soft">Our approach</p>
+            <MaskLines id="cap-h" className="t-h2 mt-6 max-w-[14ch]" lines={['Starting with', 'the process']} />
             <div className="relative mt-14 hidden h-[560px] sm:block">
               <ClipReveal from="up" className="group absolute top-0 left-0 w-[60%] rounded-[3px]">
                 <Photo k="labBeaker" ratio={3 / 4} tint zoom sizes="30vw" className="aspect-[3/4] w-full" />
@@ -168,31 +168,30 @@ export default function About() {
                 </Item>
               ))}
             </Stagger>
-            <p className="label mt-6 text-ink-mute">[Add facility details — plant area, capacity, equipment]</p>
+            <p className="label mt-6 text-ink-mute">Product and supply details are shared on enquiry</p>
           </div>
         </Container>
       </Section>
 
-      {/* 4 — Trading & distribution: selected dark section, full bleed */}
+      {/* 4 — Working with customers: selected dark section, full bleed */}
       <section aria-labelledby="trade-h" className="grid w-full bg-forest text-paper lg:grid-cols-2">
         <div className="flex flex-col justify-between gap-14 px-[var(--gutter)] py-16 lg:py-24 lg:pr-16">
-          <p className="label text-paper/60">Chemical trading &amp; distribution</p>
+          <p className="label text-paper/60">Working with customers</p>
           <div>
             <MaskLines
               id="trade-h"
               className="t-h2 max-w-[15ch] text-paper"
-              lines={['One dependable source', 'for the chemicals', 'your plant runs on']}
+              lines={['Close to the', 'industries we', 'serve']}
             />
             <Reveal>
               <p className="mt-8 max-w-[50ch] text-[16px] leading-relaxed text-paper/75">
-                Alongside our own manufactured range, we trade and distribute industrial chemicals from established
-                sources. Customers benefit from consolidated purchasing, planned deliveries and a single point of contact
-                for technical and commercial questions.
+                Being based in Ludhiana keeps us close to the engineering, auto-parts, heat treatment and textile units
+                around us. Customers can discuss technical and commercial questions directly with our team.
               </p>
             </Reveal>
           </div>
           <Stagger as="ul" className="grid grid-cols-1 border-t border-paper/20 sm:grid-cols-3">
-            {['Sourcing', 'Stocking', 'Planned delivery'].map((t, i) => (
+            {['Enquiry', 'Discussion', 'Quotation'].map((t, i) => (
               <Item as="li" key={t} className={`py-5 text-[15px] ${i > 0 ? 'border-t border-paper/20 sm:border-t-0 sm:border-l sm:pl-5' : ''}`}>
                 <span className="label mr-2 text-copper">0{i + 1}</span>
                 {t}
@@ -210,7 +209,7 @@ export default function About() {
         <Container className="grid grid-cols-12 gap-x-6 gap-y-10 py-20 lg:py-32">
           <p className="label col-span-12 text-ink-soft lg:col-span-3">Industrial expertise</p>
           <div className="col-span-12 lg:col-span-9">
-            <MaskLines id="exp-h" className="t-h2 max-w-[22ch]" lines={['We know the industries we supply', '— and the processes inside them']} />
+            <MaskLines id="exp-h" className="t-h2 max-w-[22ch]" lines={['The industries we serve', '— and the processes behind them']} />
           </div>
         </Container>
         <ul className="border-t border-ink/12">
@@ -241,17 +240,17 @@ export default function About() {
       {/* 7 — Customer commitment */}
       <Section tone="white" labelledBy="commit-h" divider>
         <Container className="grid grid-cols-12 gap-x-6 gap-y-10 py-24 lg:py-40">
-          <p className="label col-span-12 text-ink-soft lg:col-span-3">Customer commitment</p>
+          <p className="label col-span-12 text-ink-soft lg:col-span-3">Our commitment</p>
           <div className="col-span-12 lg:col-span-9">
             <h2 id="commit-h" className="sr-only">
-              Customer commitment
+              Our commitment
             </h2>
             <ScrollWords
               as="p"
               className="text-[clamp(28px,3.6vw,62px)] leading-[1.08] font-medium tracking-[-0.038em]"
-              text="“We measure ourselves by the orders our customers place a second, third and tenth time. Consistent material, honest advice and supply that arrives when it is needed — that is the commitment behind every consignment.”"
+              text="“Our aim is straightforward: to understand what each customer’s process needs, and to help them find a suitable chemical solution for it — with honest advice and attention to how it will be used.”"
             />
-            <p className="label mt-10 text-ink-soft">— [Name], [Designation]</p>
+            <p className="label mt-10 text-ink-soft">— Geeta Paints and Chemicals (India)</p>
           </div>
         </Container>
       </Section>
@@ -270,11 +269,11 @@ function QualitySteps() {
       <Container className="py-20 lg:py-32">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
-            <p className="label text-ink-soft">Quality approach</p>
-            <MaskLines id="quality-h" className="t-h2 mt-6 max-w-[16ch]" lines={['Quality is a process,', 'not a promise']} />
+            <p className="label text-ink-soft">How enquiries are handled</p>
+            <MaskLines id="quality-h" className="t-h2 mt-6 max-w-[16ch]" lines={['From first enquiry', 'to supply']} />
           </div>
           <p className="max-w-[40ch] text-[16px] leading-relaxed text-ink-soft">
-            Every enquiry follows the same four steps, from the first conversation to results on the customer’s line.
+            Each enquiry follows the same broad steps, from the first conversation through to supply.
           </p>
         </div>
         <ol ref={ref} className="relative mt-16 grid gap-y-10 sm:grid-cols-2 lg:mt-24 lg:grid-cols-4">
@@ -294,7 +293,7 @@ function QualitySteps() {
             </li>
           ))}
         </ol>
-        <p className="label mt-14 text-ink-mute">[Add quality certifications here only once confirmed by the company]</p>
+        <p className="label mt-14 text-ink-mute">Product information is shared on enquiry</p>
       </Container>
     </Section>
   )

@@ -4,10 +4,10 @@ import { Photo } from '../../common/Photo'
 import { MaskLines } from '../../motion'
 
 const stages = [
-  { t: 'Steel processing', d: 'Hardening and process chemistry for steel processors.' },
-  { t: 'Hardening & heat treatment', d: 'Chemicals used around the furnace and quench.' },
-  { t: 'Cleaning & protection', d: 'Preparation between machining and treatment.' },
-  { t: 'Component assembly', d: 'Parts ready for automotive and engineering lines.' },
+  { t: 'Cleaning & preparation', d: 'Degreasing and cleaning before parts are treated.' },
+  { t: 'Hardening & case hardening', d: 'Heating, or surface enrichment, to build hardness.' },
+  { t: 'Quenching & tempering', d: 'Controlled cooling, then tempering for toughness.' },
+  { t: 'Finished components', d: 'Parts ready for automotive and engineering use.' },
 ]
 
 /**

@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Industrial Chemical Manufacturing & Trading"
-        description="Manufacturer and trader of industrial chemicals for steel hardening, heat treatment, metal processing and automotive component manufacturing."
+        title="Industrial Chemicals for Metal Hardening & Heat Treatment"
+        description="Geeta Paints and Chemicals (India), Ludhiana, Punjab — an established chemical business since the 1990s serving metal hardening, heat treatment, automotive component and textile dyeing applications."
         path="/"
       />
       <Hero />

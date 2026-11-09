@@ -39,12 +39,12 @@ export const photos = {
   },
   chemicalPlant: {
     id: '1736820712641-56badd26f83b',
-    alt: 'Chemical manufacturing plant with steel pipework, valves and storage tanks',
+    alt: 'Chemical plant with steel pipework, valves and storage tanks',
     focus: '50% 45%',
   },
   labBeaker: {
     id: '1617155093730-a8bf47be792d',
-    alt: 'Gloved hand holding a glass beaker of liquid during quality testing',
+    alt: 'Gloved hand holding a glass beaker of liquid in a laboratory',
     focus: '45% 50%',
   },
   autoBodyLine: {

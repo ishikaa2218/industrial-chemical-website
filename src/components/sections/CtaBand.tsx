@@ -16,7 +16,7 @@ type Props = {
 export function CtaBand({
   eyebrow = 'Start a conversation',
   title = ['Looking for the right', 'chemical solution', 'for your industry?'],
-  body = 'Tell us about your process, material and volumes. We will come back with a recommendation and a quotation that fits your requirement.',
+  body = 'Share your process, material and application with our team in Ludhiana, and we will discuss which chemicals may suit your requirement.',
   button = 'Discuss Your Requirements',
   photo = 'furnace',
   to = '/contact',

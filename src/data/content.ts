@@ -10,7 +10,7 @@ export type Category = {
   applications: string[]
   usedBy: string[]
   photo: PhotoKey
-  /** Manufactured, traded or both — confirm with the client */
+  /** Supply note shown with each application */
   supply: string
 }
 
@@ -18,107 +18,107 @@ export const categories: Category[] = [
   {
     slug: 'steel-hardening',
     index: '01',
-    name: 'Steel Hardening Chemicals',
-    shortName: 'Steel Hardening',
+    name: 'Iron & Steel Hardening',
+    shortName: 'Hardening',
     summary:
-      'Chemicals that support case hardening, quenching and surface treatment of steel parts — where the right chemistry decides the final hardness and wear life.',
+      'Process chemicals for the hardening of iron and steel components — an application where the material, the process conditions and the chemistry have to work together.',
     body: [
-      'Hardening is where a steel component earns its strength. The media used to carburise, nitride or quench a part directly influences surface hardness, wear resistance, distortion and the consistency of results from batch to batch.',
-      'We supply chemicals used across these hardening stages to steel processors, heat treatment shops and component manufacturers, and help match each requirement to the customer’s process and equipment.',
+      'Hardening usually involves heating a ferrous component to its hardening temperature and then cooling it at a controlled rate, often followed by tempering. Case hardening methods such as carburising, carbonitriding and nitriding instead enrich the surface layer, giving a hard, wear-resistant case over a tougher core.',
+      'Which chemicals suit a hardening process depends on the steel grade, the section size, the furnace or bath in use and the properties specified for the part. We discuss these details with customers before recommending anything for their application.',
     ],
     applications: [
-      'Case hardening and carburising',
+      'Through hardening of steel parts',
+      'Carburising and carbonitriding',
       'Nitriding and nitrocarburising',
-      'Quenching operations',
-      'Surface hardening of gears, shafts and fasteners',
+      'Tempering after hardening',
     ],
-    usedBy: ['Steel processors', 'Heat treatment shops', 'Component manufacturers'],
+    usedBy: ['Heat treatment shops', 'Component manufacturers', 'Steel processors'],
     photo: 'moltenPour',
-    supply: '[Manufactured / Traded — to be confirmed]',
+    supply: 'Product details shared on enquiry',
   },
   {
     slug: 'heat-treatment',
     index: '02',
-    name: 'Heat Treatment Chemicals',
+    name: 'Heat Treatment & Quenching',
     shortName: 'Heat Treatment',
     summary:
-      'Process chemicals for salt-bath, quenching and protective stages of heat treatment, supplied for in-house furnaces and commercial heat treaters alike.',
+      'Quenching media and related process chemicals used in heat treatment, where the cooling stage largely decides the structure a steel part ends up with.',
     body: [
-      'Every heat treatment cycle — annealing, normalising, hardening, tempering — relies on controlled chemistry around the furnace. Salt baths, quenching media and protective compounds all affect surface finish, scale formation and repeatability.',
-      'Our heat treatment range is aimed at plants that need dependable quality and steady availability so that furnaces keep running to schedule.',
+      'Quenching media range from water and brine to quenching oils, aqueous polymer quenchants and molten salts. Each removes heat at a different rate, so each suits different steel grades, section thicknesses and distortion limits.',
+      'Results also depend on bath temperature, agitation and how well the medium is maintained in use. Choosing a quenching medium is therefore a process decision, and we help customers work through it for their own operations.',
     ],
     applications: [
-      'Annealing, normalising and tempering',
+      'Quenching after hardening',
       'Salt-bath heat treatment',
-      'Quenching and controlled cooling',
-      'Scale and decarburisation control',
+      'Annealing, normalising and tempering',
+      'Limiting scale and decarburisation',
     ],
-    usedBy: ['Commercial heat treaters', 'Captive heat treatment units', 'Forging units'],
+    usedBy: ['Commercial heat treaters', 'In-house heat treatment units', 'Forging units'],
     photo: 'furnace',
-    supply: '[Manufactured / Traded — to be confirmed]',
+    supply: 'Product details shared on enquiry',
   },
   {
     slug: 'specialty-chemicals',
     index: '03',
-    name: 'Specialty Industrial Chemicals',
-    shortName: 'Specialty Chemicals',
+    name: 'Steel & Metal Processing',
+    shortName: 'Metal Processing',
     summary:
-      'Process-specific chemistry for cleaning, surface preparation and protection of metal parts between manufacturing stages.',
+      'Cleaning, surface preparation and protection chemistry for metal parts moving between machining, heat treatment and finishing.',
     body: [
-      'Between machining, treatment and assembly, metal parts pass through several cleaning, preparation and protection steps. Each step has its own chemical requirement, and getting it wrong shows up later as rejects or rework.',
-      'Our specialty range addresses these in-between stages, with selection based on the substrate, the process that follows and the customer’s plant conditions.',
+      'Oils, coolants and residues left from machining can affect how a part responds to heat treatment, and quench residues need removing afterwards. Degreasing and cleaning before and after treatment help keep surfaces in a consistent condition.',
+      'Between operations, parts may also need temporary protection against rust during storage or transit. The right chemistry depends on the metal, the next process step and how long the parts need to be protected.',
     ],
     applications: [
-      'Metal cleaning and degreasing',
-      'Surface preparation before treatment',
-      'Rust prevention between process stages',
-      'Customer-specific process requirements',
+      'Degreasing before heat treatment',
+      'Removal of quench residues',
+      'Surface preparation for finishing',
+      'Temporary rust protection',
     ],
-    usedBy: ['Metalworking units', 'Engineering workshops', 'Component manufacturers'],
+    usedBy: ['Metal processing units', 'Engineering workshops', 'Component manufacturers'],
     photo: 'labBeaker',
-    supply: '[Manufactured / Traded — to be confirmed]',
+    supply: 'Product details shared on enquiry',
   },
   {
     slug: 'process-chemicals',
     index: '04',
-    name: 'Industrial Process Chemicals',
-    shortName: 'Process Chemicals',
+    name: 'Textile Dyeing & Processing',
+    shortName: 'Textile Dyeing',
     summary:
-      'Base and auxiliary chemicals used in day-to-day manufacturing operations, supplied in volumes that suit recurring plant consumption.',
+      'Chemicals used in textile wet processing — at the preparation, dyeing and finishing stages of yarn and fabric.',
     body: [
-      'Alongside specialised formulations, most plants consume a steady volume of base and auxiliary chemicals for routine operations and maintenance. Here, consistency of supply matters as much as the product itself.',
-      'We support these recurring requirements with planned supply, so that procurement teams are not left chasing material at short notice.',
+      'Before dyeing, yarn and fabric are usually prepared through processes such as scouring and bleaching. Dyeing then relies on dyes suited to the fibre, together with auxiliaries such as wetting, levelling and dispersing agents that help produce even, repeatable shades.',
+      'Requirements vary with the fibre, the dye class and the machinery in use. We discuss the process with dyeing and processing units before suggesting chemicals for their application.',
     ],
     applications: [
-      'General manufacturing processes',
-      'Plant and equipment maintenance',
-      'Recurring bulk requirements',
-      'Auxiliary chemicals for treatment lines',
+      'Scouring and bleaching',
+      'Dyeing of yarn and fabric',
+      'Dyeing auxiliaries',
+      'Finishing processes',
     ],
-    usedBy: ['Manufacturing plants', 'Maintenance teams', 'Procurement departments'],
+    usedBy: ['Dyeing units', 'Textile processors', 'Hosiery and knitwear units'],
     photo: 'chemicalPlant',
-    supply: '[Manufactured / Traded — to be confirmed]',
+    supply: 'Product details shared on enquiry',
   },
   {
     slug: 'automotive',
     index: '05',
-    name: 'Automotive Industry Chemical Solutions',
+    name: 'Automotive Components',
     shortName: 'Automotive',
     summary:
-      'Chemical support for automotive component manufacturing — from hardening of transmission parts to cleaning and protection before assembly.',
+      'Gears, shafts, fasteners and other automotive parts often need controlled heat treatment to reach the properties specified for them.',
     body: [
-      'Gears, shafts, bearings, pins and fasteners all go through hardening, heat treatment and surface preparation before they reach an assembly line. Automotive programmes demand that these results stay consistent over long production runs.',
-      'We work with automotive component makers and their heat treatment partners to supply chemicals that fit the process at each of these stages.',
+      'Many automotive components are made from steels that are hardened, case hardened or tempered so they can cope with wear, fatigue and load in service. Gears and shafts commonly receive surface hardening, while fasteners are often hardened and tempered.',
+      'In volume production, consistency from batch to batch matters as much as the treatment itself. Suitable, well-maintained process chemicals are one part of keeping conditions stable, alongside equipment, process control and inspection.',
     ],
     applications: [
-      'Gear and transmission components',
+      'Gears and transmission parts',
       'Shafts, pins and fasteners',
-      'Engine and chassis parts',
-      'Pre- and post-treatment cleaning',
+      'Engine and chassis components',
+      'Cleaning before and after treatment',
     ],
-    usedBy: ['Automotive component makers', 'Tier suppliers', 'Heat treatment partners'],
+    usedBy: ['Auto component manufacturers', 'Auto-parts suppliers', 'Heat treatment partners'],
     photo: 'autoBodyLine',
-    supply: '[Manufactured / Traded — to be confirmed]',
+    supply: 'Product details shared on enquiry',
   },
 ]
 
@@ -134,50 +134,50 @@ export type Industry = {
 
 export const industries: Industry[] = [
   {
-    name: 'Automobile Manufacturing',
-    line: 'Chemicals that support the processing of parts destined for vehicle production lines.',
+    name: 'Automotive Manufacturing',
+    line: 'Vehicle production relies on metal parts whose properties are set by controlled heat treatment.',
     detail:
-      'Vehicle programmes run for years, and the parts feeding them must be processed the same way throughout. We support the hardening, heat treatment and cleaning stages behind those parts.',
-    categories: ['automotive', 'specialty-chemicals'],
+      'Components such as gears, shafts and fasteners are typically hardened, case hardened or tempered before assembly. The chemistry used in those treatments is one of the factors that keeps results consistent.',
+    categories: ['automotive', 'heat-treatment'],
     photo: 'autoRobots',
   },
   {
     name: 'Automotive Components',
-    line: 'Hardening, heat treatment and preparation chemistry for gears, shafts, pins and fasteners.',
+    line: 'Gears, pins, shafts and fasteners commonly need surface or through hardening to meet their specification.',
     detail:
-      'Gears, shafts, pins and fasteners are hardened, heat treated and prepared before assembly. We supply chemicals for each of these stages to component makers and their heat treatment partners.',
+      'Component makers and their heat treatment partners need treatment conditions that hold steady over long production runs. Process chemicals are part of that, together with equipment, process control and inspection.',
     categories: ['automotive', 'steel-hardening', 'heat-treatment'],
     photo: 'machinedParts',
   },
   {
-    name: 'Steel Processing',
-    line: 'Supply for steel processors where surface quality and hardness consistency matter.',
+    name: 'Steel & Metal Processing',
+    line: 'Metal processing involves several treatment stages, each with its own chemical requirement.',
     detail:
-      'Steel processors depend on predictable surface quality and hardness. We supply hardening and process chemicals with an emphasis on consistency and planned availability.',
-    categories: ['steel-hardening', 'process-chemicals'],
+      'From degreasing and cleaning to hardening and temporary rust protection, suitable process chemicals help maintain the conditions each manufacturing step requires.',
+    categories: ['specialty-chemicals', 'steel-hardening'],
     photo: 'steelCoils',
   },
   {
-    name: 'Metalworking',
-    line: 'Cleaning, protection and process chemicals for machining and fabrication units.',
-    detail:
-      'Machining and fabrication units need parts cleaned, protected and prepared between operations. Our specialty and process chemicals are selected for those in-between stages.',
-    categories: ['specialty-chemicals', 'process-chemicals'],
-    photo: 'grinding',
-  },
-  {
     name: 'Industrial Engineering',
-    line: 'Process chemicals for engineering workshops and equipment manufacturers.',
+    line: 'Engineering components often need treatment matched to the conditions they will face in service.',
     detail:
-      'Engineering workshops and equipment manufacturers use a broad mix of process chemicals. We help consolidate that supply and match products to each application.',
-    categories: ['process-chemicals', 'specialty-chemicals'],
+      'Machine parts, tools and fabricated components vary widely in material and duty. Treatment and process chemicals are chosen around the material and its intended operating requirements.',
+    categories: ['steel-hardening', 'specialty-chemicals'],
     photo: 'cncWorkshop',
   },
   {
-    name: 'Heat Treatment',
-    line: 'Chemicals for commercial heat treaters and captive furnace operations.',
+    name: 'Textile Dyeing',
+    line: 'Dyeing and finishing use application-specific chemicals at the preparation, coloration and finishing stages.',
     detail:
-      'Commercial heat treaters and captive furnace operations need chemistry that keeps cycles repeatable. We supply chemicals used around the furnace — from salt baths to quenching.',
+      'Ludhiana is a major centre for hosiery and knitwear, and textile wet processing is part of its industrial base. Requirements depend on the fibre, the dye class and the machinery in use.',
+    categories: ['process-chemicals'],
+    photo: 'labBeaker',
+  },
+  {
+    name: 'Heat Treatment',
+    line: 'Hardening, quenching and tempering depend on carefully selected media and well-maintained baths.',
+    detail:
+      'Commercial heat treaters and in-house units work with quenching media, salt baths and related chemicals whose condition directly affects results. Selection and upkeep matter as much as the product itself.',
     categories: ['heat-treatment', 'steel-hardening'],
     photo: 'furnaceRod',
   },
@@ -187,27 +187,27 @@ export type Reason = { title: string; body: string }
 
 export const reasons: Reason[] = [
   {
-    title: 'Manufacturing and trading, together',
-    body: 'We manufacture and we trade. Customers can source process-specific chemicals and regular-use materials through a single, accountable supplier.',
+    title: 'Established since the 1990s',
+    body: 'Geeta Paints and Chemicals (India) has been part of the chemical trade in Ludhiana since the 1990s, serving the industries around it.',
   },
   {
-    title: 'Solutions shaped by your industry',
-    body: 'Steel hardening, heat treatment and automotive work each have their own demands. We start with the process, then recommend the chemistry.',
+    title: 'Based in Ludhiana, Punjab',
+    body: 'Ludhiana is one of Punjab’s main industrial centres, home to engineering, auto-parts and textile units. Being based here keeps us close to the work.',
   },
   {
-    title: 'A steady focus on product quality',
-    body: 'Consistent material is what keeps a hardening line predictable. Quality is checked before every dispatch, not assumed.',
+    title: 'The application comes first',
+    body: 'We start with the process — the material, the equipment and the specification — before discussing which chemicals suit the job.',
   },
   {
-    title: 'Reliable, planned supply',
-    body: 'We plan supply around customers’ consumption so that production does not wait on chemicals.',
+    title: 'Practical guidance on use',
+    body: 'How a chemical is used, stored and maintained affects what it delivers. We discuss handling and use with customers as part of each enquiry.',
   },
   {
-    title: 'Customer-oriented approach',
-    body: 'Direct communication, clear answers on technical questions and a team that follows through after the order is placed.',
+    title: 'Metal and textile applications',
+    body: 'Our work covers metal hardening and heat treatment as well as textile dyeing — two activities at the core of the region’s industry.',
   },
   {
-    title: 'Built for long-term relationships',
-    body: 'We aim to be the supplier a plant keeps for years — measured by repeat orders, not one-off sales.',
+    title: 'Built on ongoing relationships',
+    body: 'Industrial supply works best as a continuing relationship. We aim to stay in touch after supply and respond as customers’ requirements change.',
   },
 ]

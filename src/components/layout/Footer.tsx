@@ -28,14 +28,14 @@ export function Footer() {
       <div className="container-wide grid gap-10 border-b border-paper/12 py-16 lg:grid-cols-12 lg:items-end lg:py-24">
         <div className="lg:col-span-8">
           <p className="label text-copper">Start a conversation</p>
-          <h2 className="t-h2 mt-5 max-w-[18ch] text-paper">Tell us what your line needs. We’ll recommend the chemistry.</h2>
+          <h2 className="t-h2 mt-5 max-w-[18ch] text-paper">Tell us about your application. We’ll discuss the chemistry.</h2>
         </div>
         <div className="flex flex-col gap-3 lg:col-span-4 lg:items-end">
           <Link
             to="/contact"
             className="group inline-flex h-14 w-full items-center justify-between gap-8 rounded-[var(--radius-chip)] bg-paper px-5 text-[15px] font-medium text-forest transition-[background-color,transform] duration-200 hover:bg-copper hover:text-white active:scale-[0.985] sm:w-auto sm:min-w-[300px]"
           >
-            Send an enquiry
+            Contact Our Team
             <ArrowUpRight className="size-4.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={1.6} />
           </Link>
           <a href={`mailto:${site.contact.email}`} className="link-underline text-[14px] text-paper/70 hover:text-paper">
@@ -63,7 +63,7 @@ export function Footer() {
           </ul>
         </Item>
         <Item className="lg:col-span-3">
-          <p className="label mb-5 text-paper/45">Products</p>
+          <p className="label mb-5 text-paper/45">Applications</p>
           <ul className="space-y-1.5 text-[15px]">
             {categories.map((c) => (
               <li key={c.slug}>
@@ -71,7 +71,7 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <FooterLink to="/products#trading">Trading &amp; Distribution</FooterLink>
+              <FooterLink to="/products#trading">Enquiries &amp; Supply</FooterLink>
             </li>
           </ul>
         </Item>

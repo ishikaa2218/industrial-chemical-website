@@ -12,7 +12,7 @@ import { PageHero } from '../components/sections/PageHero'
 import { categories, type Category } from '../data/content'
 import { dur, ease } from '../motion/tokens'
 
-const sections = [...categories.map((c) => ({ id: c.slug, label: c.shortName })), { id: 'trading', label: 'Trading & Distribution' }]
+const sections = [...categories.map((c) => ({ id: c.slug, label: c.shortName })), { id: 'trading', label: 'Enquiries & Supply' }]
 const ids = sections.map((s) => s.id)
 
 function useActiveSection(list: string[]) {
@@ -48,31 +48,31 @@ export default function Products() {
     <>
       <Seo
         title="Products & Applications"
-        description="Steel hardening chemicals, heat treatment chemicals, specialty and process chemicals, automotive industry solutions, and chemical trading & distribution."
+        description="Industrial chemical applications from Geeta Paints and Chemicals (India), Ludhiana: iron and steel hardening, heat treatment and quenching, metal processing, automotive components and textile dyeing."
         path="/products"
       />
 
       <PageHero
         index="03"
         label="Products & applications"
-        lines={['Chemistry for hardening,', 'heat treatment and the', 'parts that depend on them']}
+        lines={['Industrial chemical', 'applications for metal', 'and textile processing']}
         accentLine={2}
         intro={
           <p>
-            Our range is organised by application. Each category explains where the chemistry is used and which
-            industries rely on it. Detailed product names, grades and technical data sheets are available on request.
+            This page is organised by application. Each section explains where process chemicals are used and which
+            industries rely on them. Specific product details are discussed on enquiry, according to your requirement.
           </p>
         }
       >
         <div className="flex flex-wrap gap-2 text-[12px]">
           <span className="inline-flex items-center gap-2 rounded-[var(--radius-chip)] bg-forest px-2.5 py-1.5 text-paper">
-            <span className="size-1.5 rounded-full bg-paper" /> Manufactured
+            <span className="size-1.5 rounded-full bg-paper" /> Ludhiana, Punjab
           </span>
           <span className="inline-flex items-center gap-2 rounded-[var(--radius-chip)] border border-forest/40 px-2.5 py-1.5 text-forest">
-            <span className="size-1.5 rounded-full border border-forest" /> Traded
+            <span className="size-1.5 rounded-full border border-forest" /> Since the 1990s
           </span>
         </div>
-        <p className="mt-2 text-[12.5px] text-ink-mute">Supply type is marked on each category.</p>
+        <p className="mt-2 text-[12.5px] text-ink-mute">Product availability is confirmed on enquiry.</p>
       </PageHero>
 
       <Explorer />
@@ -108,22 +108,22 @@ export default function Products() {
         <CategorySection key={c.slug} c={c} flip={i % 2 === 1} />
       ))}
 
-      {/* Trading & distribution — selected dark section */}
+      {/* Enquiries & supply — selected dark section */}
       <section id="trading" aria-labelledby="trading-h" className="w-full scroll-mt-[60px] bg-forest text-paper">
         <Container className="grid grid-cols-12 gap-x-6 gap-y-12 py-20 lg:py-28">
           <div className="col-span-12 lg:col-span-4">
             <p className="label text-paper/60">
-              <span className="text-copper">06</span> · Trading &amp; distribution
+              <span className="text-copper">06</span> · Enquiries &amp; supply
             </p>
-            <MaskLines id="trading-h" className="t-h2 mt-6 text-paper" lines={['Chemical trading', '& distribution']} />
+            <MaskLines id="trading-h" className="t-h2 mt-6 text-paper" lines={['Enquiries', '& supply']} />
             <Reveal>
               <p className="mt-6 max-w-[42ch] text-[16px] leading-relaxed text-paper/75">
-                Beyond our manufactured range, we trade and distribute industrial chemicals so that customers can
-                consolidate purchasing and keep consumption planned.
+                Product availability, quantities and supply terms are confirmed for each enquiry, based on the
+                application and the customer’s requirement.
               </p>
               <div className="mt-8">
                 <Button to="/contact?requirement=trading" variant="light">
-                  Enquire about sourcing
+                  Enquire About Industrial Chemicals
                 </Button>
               </div>
             </Reveal>
@@ -134,9 +134,9 @@ export default function Products() {
             </ClipReveal>
             <Stagger className="mt-10 grid gap-8 sm:grid-cols-3">
               {[
-                { t: 'Sourcing', d: 'Industrial and process chemicals sourced from established producers to the customer’s requirement.' },
-                { t: 'Stocking', d: 'Material held for regular-use items, so recurring orders are not left to short-notice purchasing.' },
-                { t: 'Distribution', d: 'Planned deliveries matched to consumption, with one point of contact for every order.' },
+                { t: 'Share your requirement', d: 'The application, the material or fibre, the process and approximate quantities.' },
+                { t: 'Discuss the application', d: 'Our team reviews the requirement and discusses suitable chemical options with you.' },
+                { t: 'Receive a quotation', d: 'Product details, quantities and terms are confirmed before supply.' },
               ].map((x, i) => (
                 <Item key={x.t} className="border-t border-paper/20 pt-5">
                   <p className="label text-copper">0{i + 1}</p>
@@ -150,10 +150,10 @@ export default function Products() {
       </section>
 
       <CtaBand
-        eyebrow="Not sure which product fits?"
-        title={['Tell us about your', 'process — we’ll recommend', 'the chemistry']}
-        body="Share your material, process and equipment details. Our team will suggest suitable products and send a quotation."
-        button="Send a Product Enquiry"
+        eyebrow="Not sure what your process needs?"
+        title={['Tell us about your', 'process — we’ll discuss', 'the chemistry']}
+        body="Share your material, process and equipment details with our team in Ludhiana, and we will discuss chemicals that may suit the application."
+        button="Enquire About Industrial Chemicals"
         photo="lathe"
       />
     </>
@@ -182,7 +182,7 @@ function Explorer() {
   return (
     <Section tone="white" labelledBy="explorer-h" divider>
       <h2 id="explorer-h" className="sr-only">
-        Product range overview
+        Application overview
       </h2>
       <div className="grid lg:grid-cols-12">
         {/* Index */}
@@ -290,7 +290,7 @@ function CategorySection({ c, flip }: { c: Category; flip: boolean }) {
         <div className={`flex flex-col gap-12 px-[var(--gutter)] py-14 lg:px-16 lg:py-24 ${flip ? 'lg:order-1' : ''}`}>
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="label text-copper">Category {c.index}</p>
+              <p className="label text-copper">Application {c.index}</p>
               <span className="rounded-[var(--radius-chip)] border border-dashed border-ink/25 px-2.5 py-1 text-[12px] text-ink-soft">{c.supply}</span>
             </div>
             <MaskLines id={`${c.slug}-h`} className="t-h2 mt-6 max-w-[14ch]" lines={[c.name]} />
@@ -328,16 +328,16 @@ function CategorySection({ c, flip }: { c: Category; flip: boolean }) {
                 </ul>
               </div>
               <div className="rounded-[3px] border border-dashed border-ink/20 p-4">
-                <p className="label text-ink-soft">Product range</p>
+                <p className="label text-ink-soft">Product details</p>
                 <p className="mt-2 text-[13.5px] leading-relaxed text-ink-mute">
-                  [Product names, grades and technical data sheets for this category to be added.]
+                  Specific products for this application are discussed on enquiry, according to your process.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <Button to={`/contact?requirement=${c.slug}`}>Enquire about this range</Button>
+            <Button to={`/contact?requirement=${c.slug}`}>Discuss This Application</Button>
             <Link to="/contact" className="group inline-flex min-h-12 items-center gap-2 px-4 text-[14px] font-medium text-forest">
               <span className="link-underline">Request a technical discussion</span>
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.6} />

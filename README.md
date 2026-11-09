@@ -37,18 +37,18 @@ npm run preview  # preview the production build
 
 Hosted on Vercel, connected to this repository. Every push to `main` triggers a production build (`npm run build`, output `dist/`). `vercel.json` rewrites all routes to `index.html` for client-side routing.
 
-## Content to replace before launch
+## Company content
 
-All client-specific details are placeholders. Edit them in one place:
+The site content describes **Geeta Paints and Chemicals (India)**, an established chemical business in Ludhiana, Punjab, with roots in the 1990s, serving metal hardening, heat treatment, automotive component, metal processing and textile dyeing applications.
 
-- **`src/data/site.ts`** — company name, email, phone, WhatsApp number, address, business hours, Google Maps embed URL, site URL.
-- **`src/data/content.ts`** — product categories (supply type: manufactured / traded), applications, industries, reasons to choose the company.
-- **`src/pages/About.tsx`** — "At a glance" facts (`[Year]`, `[City, State]`, `[Location]`), facility details, quote attribution `[Name], [Designation]`.
-- **`src/components/common/Logo.tsx`** — temporary wordmark; replace with the client logo.
-- **`public/`** — `og-image.png`, `favicon.svg`, `apple-touch-icon.png`, and update the domain in `sitemap.xml`, `robots.txt` and `index.html` if a custom domain is added.
-- **Photography** (`src/data/images.ts`) — royalty-free Unsplash images served from the Unsplash CDN; swap for the client's own plant/product photos when available.
+Still to confirm with the company before relying on them:
 
-No product names, chemical compositions, specifications, certifications or statistics have been invented. Product ranges show a placeholder until the client supplies them.
+- **`src/data/site.ts`** — email address, phone and WhatsApp number (currently placeholders), street address and Google Maps embed URL.
+- **`src/data/content.ts`** — specific product names and grades for each application (the site deliberately describes applications rather than invented products).
+- **`src/components/common/Logo.tsx`** — temporary mark; replace with the company logo if one exists.
+- **Photography** (`src/data/images.ts`) — royalty-free Unsplash images of general industry; they do not show the company's own premises or products.
+
+No founding year, founders, facilities, certifications, clients, statistics or product specifications have been stated, as none are confirmed.
 
 ## Contact form
 

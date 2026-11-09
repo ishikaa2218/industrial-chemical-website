@@ -6,7 +6,7 @@ import { Photo } from '../../common/Photo'
 import { MaskLines } from '../../motion'
 import { ease } from '../../../motion/tokens'
 
-const focusAreas = ['Steel hardening', 'Heat treatment', 'Automotive components', 'Metal processing']
+const focusAreas = ['Metal hardening', 'Heat treatment', 'Automotive components', 'Textile dyeing']
 
 /**
  * Full-bleed hero. Sequence on load: image wipes open and settles →
@@ -63,23 +63,23 @@ export function Hero() {
             trigger="mount"
             delay={0.45}
             className="t-display col-span-12 lg:col-span-8"
-            lines={['Advanced chemical', 'solutions for stronger', 'industrial performance']}
+            lines={['Industrial chemicals', 'for metal hardening', 'and heat treatment']}
             lineClassName={(i) => (i === 2 ? 'text-[#e4bfa0]' : 'text-paper')}
           />
           <div className="col-span-12 sm:col-span-8 lg:col-span-4 lg:pb-3 xl:col-span-3 xl:col-start-10">
             <motion.p {...enter(0.95)} className="max-w-[40ch] text-[15.5px] leading-relaxed text-paper/80">
-              Specialised chemical manufacturing and supply for steel hardening, heat treatment and automotive component
-              manufacturing — produced and sourced for consistent results on the shop floor.
+              Established in Ludhiana in the 1990s, Geeta Paints and Chemicals (India) serves industrial applications in
+              metal hardening, heat treatment and automotive component manufacturing, as well as textile dyeing.
             </motion.p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row lg:flex-col">
               <motion.div {...enter(1.08)}>
                 <Button to="/products" variant="copper" className="w-full sm:min-w-[210px]">
-                  Explore Our Products
+                  Explore Applications
                 </Button>
               </motion.div>
               <motion.div {...enter(1.16)}>
                 <Button to="/contact" variant="ghost-light" className="w-full">
-                  Contact Us
+                  Contact Our Team
                 </Button>
               </motion.div>
             </div>

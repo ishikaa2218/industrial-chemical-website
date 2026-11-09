@@ -61,7 +61,7 @@ function PinnedStage() {
         <div className="relative z-10 flex w-[44%] flex-col justify-between pt-[calc(var(--header-h)+40px)] pb-10 pl-[var(--gutter)] pr-12">
           <div>
             <h2 id="categories-title" className="label flex items-center gap-3 text-paper/60">
-              <span className="text-copper">02</span> Product categories
+              <span className="text-copper">02</span> Applications
             </h2>
 
             <div className="mt-10 min-h-[340px]">
@@ -84,7 +84,7 @@ function PinnedStage() {
                   </ul>
                   <div className="mt-8 flex gap-2">
                     <Button to={`/products#${c.slug}`} variant="light" size="sm">
-                      View category
+                      View details
                     </Button>
                     <Button to={`/contact?requirement=${c.slug}`} variant="ghost-light" size="sm">
                       Enquire

@@ -34,9 +34,9 @@ export function Industries() {
           <span className="text-copper">03</span> · Industries served
         </p>
         <div className="col-span-12 flex flex-col gap-6 lg:col-span-9 lg:flex-row lg:items-end lg:justify-between">
-          <MaskLines id="industries-title" className="t-h2" lines={['Where our chemistry', 'goes to work']} />
+          <MaskLines id="industries-title" className="t-h2" lines={['Industries that rely', 'on process chemistry']} />
           <p className="max-w-[34ch] text-[15px] leading-relaxed text-ink-soft">
-            Select an industry to see how we support it and which product ranges it relies on.
+            Select an industry to see how its processes use chemicals and which application areas relate to it.
           </p>
         </div>
       </Container>
@@ -73,7 +73,7 @@ export function Industries() {
                   </span>
                 </span>
                 <span className="mt-1 block text-[12.5px] leading-snug text-ink-mute">
-                  {ind.categories.length} product ranges
+                  Related areas: {ind.categories.length}
                 </span>
               </button>
             </Item>
@@ -225,7 +225,7 @@ function IndustrySheet({
                   <p className="t-lead mt-6 max-w-[46ch] text-ink">{ind.line}</p>
                   <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-ink-soft">{ind.detail}</p>
 
-                  <p className="label mt-10 text-ink-soft">Relevant product ranges</p>
+                  <p className="label mt-10 text-ink-soft">Related application areas</p>
                   <ul className="mt-3 border-t border-ink/12">
                     {related.map((c) => (
                       <li key={c.slug} className="border-b border-ink/12">
@@ -248,7 +248,7 @@ function IndustrySheet({
 
               <div>
                 <Button to="/contact" onClick={onClose}>
-                  Discuss your requirement
+                  Discuss Your Requirements
                 </Button>
               </div>
             </div>

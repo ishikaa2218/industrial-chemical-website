@@ -16,10 +16,10 @@ export function WhyUs() {
             <p className="label text-ink-soft">
               <span className="text-copper">05</span> · Why work with us
             </p>
-            <MaskLines id="why-title" className="t-h2 mt-6 max-w-[13ch]" lines={['A supplier your', 'production line', 'can rely on']} />
+            <MaskLines id="why-title" className="t-h2 mt-6 max-w-[13ch]" lines={['Established in', 'Ludhiana since', 'the 1990s']} />
             <p className="mt-6 max-w-[40ch] text-[16px] leading-relaxed text-ink-soft">
-              Chemical supply for metal processing is not a commodity purchase. These are the commitments behind every
-              order we take.
+              Choosing process chemicals depends on the application as much as the product. This is how we approach
+              that work.
             </p>
             <div className="relative mt-12 hidden h-[340px] lg:block">
               <ClipReveal from="up" className="group absolute top-0 left-0 w-[58%] rounded-[3px]">

@@ -20,7 +20,7 @@ type Fields = {
 
 const requirementOptions = [
   ...categories.map((c) => ({ value: c.slug, label: c.name })),
-  { value: 'trading', label: 'Chemical Trading & Distribution' },
+  { value: 'trading', label: 'General industrial chemical enquiry' },
   { value: 'other', label: 'Other / not sure yet' },
 ]
 
@@ -72,7 +72,7 @@ export default function Contact() {
     <>
       <Seo
         title="Contact Us"
-        description="Send an enquiry for steel hardening, heat treatment, specialty and process chemicals. Contact our team for product recommendations and quotations."
+        description="Contact Geeta Paints and Chemicals (India), Ludhiana, Punjab, to discuss industrial chemical requirements for metal hardening, heat treatment and textile dyeing applications."
         path="/contact"
       />
 
@@ -93,8 +93,8 @@ export default function Contact() {
                 lineClassName={(i) => (i > 0 ? 'text-forest' : '')}
               />
               <p className="mt-6 max-w-[42ch] text-[16px] leading-relaxed text-ink-soft">
-                Share your process, material and expected volumes. Our team will respond with product recommendations
-                and a quotation.
+                Contact Geeta Paints and Chemicals (India) in Ludhiana to discuss your industrial chemical requirements
+                and the applications you need support with.
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export default function Contact() {
                         className={`${inputCls(!!show('requirement'))} appearance-none bg-[url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23303A38' stroke-width='1.6'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")] bg-[position:right_0.25rem_center] bg-no-repeat pr-8 ${fields.requirement ? '' : 'text-ink-mute'}`}
                       >
                         <option value="" disabled>
-                          Select a category
+                          Select an application
                         </option>
                         {requirementOptions.map((o) => (
                           <option key={o.value} value={o.value} className="text-ink">
@@ -255,7 +255,7 @@ export default function Contact() {
             <div>
               <Label>Location</Label>
               <h2 id="map-h" className="t-h3 mt-4">
-                Visit our office &amp; facility
+                Based in Ludhiana, Punjab
               </h2>
             </div>
             <address className="text-[15px] leading-relaxed not-italic text-ink-soft">
@@ -269,7 +269,7 @@ export default function Contact() {
           <div className="relative min-h-[340px] bg-stone lg:col-span-8 lg:min-h-[520px]">
             {site.contact.mapEmbedUrl ? (
               <iframe
-                title="Company location on Google Maps"
+                title="Geeta Paints and Chemicals (India) location on Google Maps"
                 src={site.contact.mapEmbedUrl}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -281,7 +281,7 @@ export default function Contact() {
                   <span className="grid size-12 place-items-center rounded-full bg-forest text-paper">
                     <MapPin className="size-5" strokeWidth={1.6} />
                   </span>
-                  <p className="label text-ink-soft">[Google Maps location to be added]</p>
+                  <p className="label text-ink-soft">Ludhiana, Punjab, India</p>
                 </div>
               </div>
             )}
